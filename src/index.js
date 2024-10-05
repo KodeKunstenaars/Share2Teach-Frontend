@@ -20,11 +20,11 @@ const router = createBrowserRouter([
         element: <Subjects/>
       },
       {
-        path: "/add",
+        path: "/upload-document",
         element: <AddDocuments/>
       },
       {
-        path: "/moderate",
+        path: "/moderate-document",
         element: <ModerateDocuments/>
       }
       

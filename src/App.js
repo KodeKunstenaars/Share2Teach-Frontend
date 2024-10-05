@@ -1,4 +1,4 @@
-import { Outlet } from 'react-router-dom';
+import { Link, Outlet } from 'react-router-dom';
 
 
 function App() {
@@ -9,7 +9,7 @@ function App() {
           <h1 className="mt-3">Go Watch a Movie!</h1>
         </div>
         <div className="col text-end">
-          <a href="#!"><span className="badge bg-success">Login</span></a>
+          <Link to="/authenticate"><span className="badge bg-success">Login</span></Link>
         </div>
         <hr className="mb-3"></hr>
       </div>
@@ -18,10 +18,10 @@ function App() {
         <div className="col-md-2">
           <nav>
             <div className="list-group">
-            <a href="/" className="List-group-item list-group-item-action">Home</a>
-            <a href="/subjects" className="List-group-item list-group-item-action">Subjects</a>
-            <a href="/add" className="List-group-item list-group-item-action">Add Documents</a>
-            <a href="/moderate" className="List-group-item list-group-item-action">Moderate Documents</a>
+            <Link to ="/" className="List-group-item list-group-item-action">Home</Link>
+            <Link to ="/subjects" className="List-group-item list-group-item-action">Subjects</Link>
+            <Link to ="/upload-document" className="List-group-item list-group-item-action">Add Documents</Link>
+            <Link to ="/moderate-document" className="List-group-item list-group-item-action">Moderate Documents</Link>
             </div>
           </nav>
         </div>

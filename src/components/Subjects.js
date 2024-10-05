@@ -2,12 +2,12 @@
 
 const Subjects = () => {
     return(
-        <>
-        <div className="text-center">
+
+        <div>
             <h2>Subjects</h2>
             <hr />
         </div>
-        </>
+    
     )
 }
 

@@ -1,11 +1,9 @@
 const AddDocuments = () => {
     return(
-        <>
-        <div className="text-center">
+        <div>
             <h2>Add a document</h2>
             <hr />
         </div>
-        </>
     )
 }
 
