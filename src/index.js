@@ -7,6 +7,7 @@ import Home from './components/Home';
 import Subjects from './components/Subjects';
 import AddDocuments from './components/AddDocuments';
 import ModerateDocuments from './components/ModerateDocuments';
+import Authenticate from './components/Authenticate';
 
 // routes are defined
 const router = createBrowserRouter([
@@ -27,8 +28,11 @@ const router = createBrowserRouter([
       {
         path: "/moderate-document", //route for moderation page
         element: <ModerateDocuments/>
-      }
-      
+      },
+      {
+        path: "/authenticate",
+        element: <Authenticate/>
+      },      
     ]
   }
 ])

@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import Library from './../images/Library.jpeg'
 
 // component that displays the Home page
@@ -7,7 +8,9 @@ const Home = () => {
         <div className="text-center">
             <h2>Welcome to Share2Teach</h2>
             <hr />
-            <img src={Library} alt='Library'></img>
+            <Link to="/Subjects">
+                <img src={Library} alt='Library'></img>
+            </Link>
 
         </div>
         </>

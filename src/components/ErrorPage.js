@@ -11,7 +11,7 @@ export default function ErrorPage() {
                     <h1 className="mt-3">Oops!</h1>
                     <p>Sorry, an unexpected error has occured.</p>
                     <p>
-                        <em>{error.stausText || error.message}</em>
+                        <em>{error.statusText || error.message}</em>
                     </p>
                 </div>
             </div>
