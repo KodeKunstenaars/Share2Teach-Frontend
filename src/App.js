@@ -1,4 +1,5 @@
-import Home from './components/Home'
+import { Outlet } from 'react-router-dom';
+
 
 function App() {
   return (
@@ -17,24 +18,15 @@ function App() {
         <div className="col-md-2">
           <nav>
             <div className="list-group">
-            <a href="#!" className="List-group-item list-group-item-action">Home</a>
-              <a href="#!" className="List-group-item list-group-item-action">Mathematics</a>
-              <a href="#!" className="List-group-item list-group-item-action">Business Studies</a>
-              <a href="#!" className="List-group-item list-group-item-action">History</a>
-              <a href="#!" className="List-group-item list-group-item-action">Geography</a>
-              <a href="#!" className="List-group-item list-group-item-action">Natural Science</a>
-              <a href="#!" className="List-group-item list-group-item-action">Life Science</a>
-              <a href="#!" className="List-group-item list-group-item-action">English</a>
-              <a href="#!" className="List-group-item list-group-item-action">Technology</a>
-              <a href="#!" className="List-group-item list-group-item-action">Afrikaans</a>
-              <a href="#!" className="List-group-item list-group-item-action">Life Skills</a>
-              <a href="#!" className="List-group-item list-group-item-action">Computer Science</a>
-              <a href="#!" className="List-group-item list-group-item-action">Other useful OER's</a>
+            <a href="/" className="List-group-item list-group-item-action">Home</a>
+            <a href="/subjects" className="List-group-item list-group-item-action">Subjects</a>
+            <a href="/add" className="List-group-item list-group-item-action">Add Documents</a>
+            <a href="/moderate" className="List-group-item list-group-item-action">Moderate Documents</a>
             </div>
           </nav>
         </div>
         <div className="col-md-10">
-            <Home />
+            <Outlet />
         </div>
       </div>
     </div>
