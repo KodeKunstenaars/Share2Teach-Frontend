@@ -1,3 +1,5 @@
+
+//component that will display the moderation page for admins/moderators
 const ModerateDocuments = () => {
     return(
         <div>

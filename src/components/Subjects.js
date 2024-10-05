@@ -1,5 +1,5 @@
 
-
+// component will display all available subjects
 const Subjects = () => {
     return(
 

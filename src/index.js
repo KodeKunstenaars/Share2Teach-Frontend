@@ -8,23 +8,24 @@ import Subjects from './components/Subjects';
 import AddDocuments from './components/AddDocuments';
 import ModerateDocuments from './components/ModerateDocuments';
 
+// routes are defined
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
     errorElement: <ErrorPage />,
     children: [
-      {index: true, element: <Home />},
+      {index: true, element: <Home />}, //default index route (Home page)
       {
-        path: "/subjects",
+        path: "/subjects", //route for subjects page
         element: <Subjects/>
       },
       {
-        path: "/upload-document",
+        path: "/upload-document", // route for upload page
         element: <AddDocuments/>
       },
       {
-        path: "/moderate-document",
+        path: "/moderate-document", //route for moderation page
         element: <ModerateDocuments/>
       }
       
@@ -32,7 +33,7 @@ const router = createBrowserRouter([
   }
 ])
 
-
+// Rendering the application and router setup to the DOM
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>

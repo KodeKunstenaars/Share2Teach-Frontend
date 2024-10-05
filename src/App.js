@@ -1,4 +1,4 @@
-import { Link, Outlet } from 'react-router-dom';
+import { Link, Outlet } from 'react-router-dom'; // import for routing links and outlet for nested routes
 
 
 function App() {
@@ -9,7 +9,7 @@ function App() {
           <h1 className="mt-3">Go Watch a Movie!</h1>
         </div>
         <div className="col text-end">
-          <Link to="/authenticate"><span className="badge bg-success">Login</span></Link>
+          <Link to="/authenticate"><span className="badge bg-success">Login</span></Link> {/* login button created */}
         </div>
         <hr className="mb-3"></hr>
       </div>
@@ -18,6 +18,7 @@ function App() {
         <div className="col-md-2">
           <nav>
             <div className="list-group">
+              {/* sidebar navigation links */}
             <Link to ="/" className="List-group-item list-group-item-action">Home</Link>
             <Link to ="/subjects" className="List-group-item list-group-item-action">Subjects</Link>
             <Link to ="/upload-document" className="List-group-item list-group-item-action">Add Documents</Link>

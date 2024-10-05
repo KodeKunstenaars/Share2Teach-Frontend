@@ -1,5 +1,5 @@
 
-
+// component that will display an individual docoment when clicked from the document page
 const Document = () => {
     return(
 

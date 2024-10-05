@@ -1,5 +1,5 @@
 
-
+// this component will display all documents under specified subject category
 const Subject = () => {
     return(
 

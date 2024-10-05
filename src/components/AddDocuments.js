@@ -1,3 +1,5 @@
+
+// component that will display the add document page for educators/admins/moderators
 const AddDocuments = () => {
     return(
         <div>

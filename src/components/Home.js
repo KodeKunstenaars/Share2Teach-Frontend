@@ -1,5 +1,6 @@
 import Library from './../images/Library.jpeg'
 
+// component that displays the Home page
 const Home = () => {
     return(
         <>
