@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, Outlet } from "react-router-dom"; // import for routing links and outlet for nested routes
+import { Link, Outlet, useNavigate } from "react-router-dom"; // import for routing links and outlet for nested routes
 import Alert from "./components/Alert";
 
 // Define role-based permissions
@@ -43,6 +43,12 @@ function App() {
   const [jwtToken, setJwtToken] = useState("");
   const [alertMessage, setAlertMessage] = useState("");
   const [alertClassName, setAlertClassName] = useState("d-none");
+  const navigate = useNavigate();
+
+  const logOut = () => {
+    setJwtToken("");
+    navigate("/authenticate");
+  }
 
   return (
     <div className="container">
@@ -57,7 +63,7 @@ function App() {
               <span className="badge bg-success">Login</span>
             </Link>
           ) : (
-            <a href="#!" onClick={() => setJwtToken("")}>
+            <a href="#!" onClick={logOut}>
               <span className="badge bg-danger">Logout</span>
             </a>
           )}
