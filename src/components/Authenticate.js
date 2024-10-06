@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Input from "./form/Input";
-import { useOutletContext } from "react-router-dom";
+import { useNavigate, useOutletContext } from "react-router-dom";
 
 // component that will display the login page
 const Authenticate = () => {
@@ -8,6 +8,11 @@ const Authenticate = () => {
     const [password, setPassword] = useState("");
 
     const { setJwtToken } = useOutletContext();
+    const { setAlertClassName } = useOutletContext();
+    const { setAlertMessage } = useOutletContext();
+
+
+    const navigate = useNavigate();
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -15,6 +20,12 @@ const Authenticate = () => {
         
         if (email === "admin@example.com") {
             setJwtToken("admin");
+            setAlertClassName("d-none");
+            setAlertMessage("");
+            navigate("/");
+        } else {
+            setAlertClassName("alert-danger");
+            setAlertMessage("Invalid credentials");
         }
     }
 
