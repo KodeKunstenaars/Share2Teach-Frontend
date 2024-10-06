@@ -1,16 +1,20 @@
 import { useState } from "react";
 import Input from "./form/Input";
+import { useOutletContext } from "react-router-dom";
 
 // component that will display the login page
 const Authenticate = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
+    const { setJwtToken } = useOutletContext();
+
     const handleSubmit = (event) => {
         event.preventDefault();
+        console.log("email/pass", email, password)
         
-        if (email == "admin@example.com") {
-            
+        if (email === "admin@example.com") {
+            setJwtToken("admin");
         }
     }
 
