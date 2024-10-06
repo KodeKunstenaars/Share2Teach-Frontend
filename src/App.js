@@ -28,13 +28,13 @@ const renderLinks = (role) => {
 
 function App() {
   // For demonstration, "admin" is set as the default jwtToken value. This would come from user authentication in a real app.
-  const [jwtToken, setJwtToken] = useState("educator");
+  const [jwtToken, setJwtToken] = useState("");
 
   return (
     <div className="container">
       <div className="row">
         <div className="col">
-          <h1 className="mt-3">Go Watch a Movie!</h1>
+          <h1 className="mt-3">Share2Teach</h1>
         </div>
         <div className="col text-end">
           {/* Login/Logout button */}

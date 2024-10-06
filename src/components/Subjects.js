@@ -40,6 +40,10 @@ const Subjects = () => {
             {
                 title: "Computer Science",
             },
+            {
+                title: "Other",
+            },
+            
             
         ];
 

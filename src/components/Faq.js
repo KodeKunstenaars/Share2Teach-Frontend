@@ -14,7 +14,7 @@ const Faq = () => {
 
         setFaq(faqList)
     }, []);
-  
+  // display the FAQ list
     return(
         <div>
             <h2>FAQ's</h2>
