@@ -21,6 +21,7 @@ function App() {
               {/* sidebar navigation links */}
             <Link to ="/" className="List-group-item list-group-item-action">Home</Link>
             <Link to ="/subjects" className="List-group-item list-group-item-action">Subjects</Link>
+            <Link to ="/faq" className="List-group-item list-group-item-action">FAQ</Link>
             <Link to ="/upload-document" className="List-group-item list-group-item-action">Add Documents</Link>
             <Link to ="/moderate-document" className="List-group-item list-group-item-action">Moderate Documents</Link>
             </div>

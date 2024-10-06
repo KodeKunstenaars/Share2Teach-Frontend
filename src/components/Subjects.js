@@ -8,47 +8,36 @@ const Subjects = () => {
     useEffect( () => {
         let subjectList = [
             {
-                id: 1,
                 title: "Mathematics",
             },
             {
-                id: 2,
                 title: "Business Studies",
             },
             {
-                id: 3,
                 title: "History",
             },
             {
-                id: 4,
                 title: "Geography",
             },
             {
-                id: 5,
                 title: "Natural Science",
             },
             {
-                id: 6,
                 title: "Life Science",
             },
             {
-                id: 7,
                 title: "English",
             },
             {
-                id: 8,
                 title: "Technology",
             },
             {
-                id: 9,
                 title: "Afrikaans",
             },
             {
-                id: 10,
                 title: "Life Skills",
             },
             {
-                id: 11,
                 title: "Computer Science",
             },
             
@@ -71,7 +60,7 @@ const Subjects = () => {
                     {subjects.map((m) => (
                         <tr key={m.id}>
                             <td>
-                                <Link to= {`/subjects/${m.id}`}>
+                                <Link to= {`/subjects/${m.title}`}>
                                     {m.title}
                                 </Link>
                             </td>
