@@ -10,6 +10,7 @@ import ModerateDocuments from './components/ModerateDocuments';
 import Authenticate from './components/Authenticate';
 import Subject from './components/Subject';
 import Faq from './components/Faq';
+import SearchResults from './components/SearchResult';
 // routes are defined
 const router = createBrowserRouter([
   {
@@ -21,6 +22,10 @@ const router = createBrowserRouter([
       {
         path: "/subjects", //route for subjects page
         element: <Subjects/>
+      },
+      {
+        path: "/search/:query", //route for subjects page
+        element: <SearchResults/>
       },
       {
         path: "/subjects/:title", //route for subjects page

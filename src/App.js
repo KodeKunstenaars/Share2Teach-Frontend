@@ -1,29 +1,25 @@
 import { useState } from "react";
-import { Link, Outlet, useNavigate } from "react-router-dom"; // import for routing links and outlet for nested routes
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import Alert from "./components/Alert";
+import Search from "./components/Search"; // Import the Search component
 
-// Define role-based permissions
 const rolePermissions = {
-  public: ["/", "/subjects", "/faq"], // Accessible to anyone
-  admin: ["/", "/subjects", "/faq", "/upload-document", "/moderate-document"], // Admin routes
+  public: ["/", "/subjects", "/faq"],
+  admin: ["/", "/subjects", "/faq", "/upload-document", "/moderate-document"],
   moderator: [
     "/",
     "/subjects",
     "/faq",
     "/upload-document",
     "/moderate-document",
-  ], // Moderator routes
-  educator: ["/", "/subjects", "/faq", "/upload-document"], // Educator routes
+  ],
+  educator: ["/", "/subjects", "/faq", "/upload-document"],
 };
 
-// Function to render the links based on role
 const renderLinks = (role) => {
-  // Default to public if no role is provided
   const allowedRoutes = rolePermissions[role || "public"];
 
-  // Generate <Link> components for each allowed route
   return allowedRoutes.map((route) => {
-    // Special handling for the root ("/") route to label it as "Home"
     let linkText =
       route === "/" ? "Home" : route.replace("-", " ").replace("/", "");
     return (
@@ -39,7 +35,6 @@ const renderLinks = (role) => {
 };
 
 function App() {
-  // For demonstration, "admin" is set as the default jwtToken value. This would come from user authentication in a real app.
   const [jwtToken, setJwtToken] = useState("");
   const [alertMessage, setAlertMessage] = useState("");
   const [alertClassName, setAlertClassName] = useState("d-none");
@@ -48,7 +43,13 @@ function App() {
   const logOut = () => {
     setJwtToken("");
     navigate("/authenticate");
-  }
+  };
+
+  // Handle search function that will later connect to the backend
+  const handleSearch = (query) => {
+    console.log("Search query:", query);
+    // You will later implement this to fetch from the backend
+  };
 
   return (
     <div className="container">
@@ -56,14 +57,18 @@ function App() {
         <div className="col">
           <h1 className="mt-3">Share2Teach</h1>
         </div>
-        <div className="col text-end">
-          {/* Login/Logout button */}
+        <div className="col d-flex justify-content-end align-items-center">
+          {/* Include Search component next to the login/logout button */}
+          <Search onSearch={handleSearch} />
           {jwtToken === "" ? (
             <Link to="/authenticate">
-              <span className="badge bg-success">Login</span>
+              <span className="badge bg-success ms-2">Login</span>{" "}
+              {/* Added margin to separate the buttons */}
             </Link>
           ) : (
-            <a href="#!" onClick={logOut}>
+            <a href="#!" onClick={logOut} className="ms-2">
+              {" "}
+              {/* Added margin to separate the buttons */}
               <span className="badge bg-danger">Logout</span>
             </a>
           )}
@@ -74,10 +79,7 @@ function App() {
       <div className="row">
         <div className="col-md-2">
           <nav>
-            <div className="list-group">
-              {/* Render links based on the jwtToken value */}
-              {renderLinks(jwtToken)}
-            </div>
+            <div className="list-group">{renderLinks(jwtToken)}</div>
           </nav>
         </div>
         <div className="col-md-10">
