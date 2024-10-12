@@ -19,7 +19,7 @@ const Subject = () => {
       headers: headers,
     };
 
-    fetch(`http://localhost:8080/search?subject=${encodeURIComponent(title)}`, requestOptions)
+    fetch(`/search?subject=${encodeURIComponent(title)}`, requestOptions)
       .then((response) => {
         if (!response.ok) {
           return response.text().then((text) => {
