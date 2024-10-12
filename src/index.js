@@ -24,7 +24,7 @@ const router = createBrowserRouter([
         element: <Subjects/>
       },
       {
-        path: "/search/:query", //route for subjects page
+        path: "/search", //route for subjects page
         element: <SearchResults/>
       },
       {
