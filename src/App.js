@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import Alert from "./components/Alert";
 import Search from "./components/Search"; // Import the Search component
+import './styles/SideNav.css'; // Import the CSS for SideNav
 
 const rolePermissions = {
   public: ["/", "/subjects", "/faq"],
@@ -16,7 +17,7 @@ const rolePermissions = {
   educator: ["/", "/subjects", "/faq", "/upload-document"],
 };
 
-const renderLinks = (role) => {
+const renderLinks = (role, toggleNav) => {
   const allowedRoutes = rolePermissions[role || "public"];
 
   return allowedRoutes.map((route) => {
@@ -27,6 +28,7 @@ const renderLinks = (role) => {
         to={route}
         key={route}
         className="list-group-item list-group-item-action"
+        onClick={toggleNav} // Close the side nav when a link is clicked
       >
         {linkText.charAt(0).toUpperCase() + linkText.slice(1)}
       </Link>
@@ -38,14 +40,18 @@ function App() {
   const [jwtToken, setJwtToken] = useState("");
   const [alertMessage, setAlertMessage] = useState("");
   const [alertClassName, setAlertClassName] = useState("d-none");
+  const [isNavOpen, setIsNavOpen] = useState(false); // State to manage side nav
   const navigate = useNavigate();
+
+  const toggleNav = () => {
+    setIsNavOpen(!isNavOpen);
+  };
 
   const logOut = () => {
     setJwtToken("");
     navigate("/authenticate");
   };
 
-  // Handle search function that will later connect to the backend
   const handleSearch = (query) => {
     console.log("Search query:", query);
     // You will later implement this to fetch from the backend
@@ -55,20 +61,20 @@ function App() {
     <div className="container">
       <div className="row">
         <div className="col">
+          {/* Hamburger icon */}
+          <span className="hamburger" onClick={toggleNav}>
+            &#9776; {/* Three lines for the hamburger menu */}
+          </span>
           <h1 className="mt-3">Share2Teach</h1>
         </div>
         <div className="col d-flex justify-content-end align-items-center">
-          {/* Include Search component next to the login/logout button */}
           <Search onSearch={handleSearch} />
           {jwtToken === "" ? (
             <Link to="/authenticate">
-              <span className="badge bg-success ms-2">Login</span>{" "}
-              {/* Added margin to separate the buttons */}
+              <span className="badge bg-success ms-2">Login</span>
             </Link>
           ) : (
             <a href="#!" onClick={logOut} className="ms-2">
-              {" "}
-              {/* Added margin to separate the buttons */}
               <span className="badge bg-danger">Logout</span>
             </a>
           )}
@@ -76,13 +82,14 @@ function App() {
         <hr className="mb-3" />
       </div>
 
-      <div className="row">
-        <div className="col-md-2">
-          <nav>
-            <div className="list-group">{renderLinks(jwtToken)}</div>
-          </nav>
-        </div>
-        <div className="col-md-10">
+      {/* Side Navigation */}
+      <div className={`sidenav ${isNavOpen ? 'open' : ''}`}>
+        <a href="#" className="closebtn" onClick={toggleNav}>&times;</a>
+        {renderLinks(jwtToken, toggleNav)}
+      </div>
+
+      <div className={`row ${isNavOpen ? 'shifted-content' : ''}`}>
+        <div className="col-md-10 offset-md-2">
           <Alert message={alertMessage} className={alertClassName} />
           <Outlet
             context={{

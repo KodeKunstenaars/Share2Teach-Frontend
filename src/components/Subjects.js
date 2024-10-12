@@ -64,7 +64,7 @@ const Subjects = () => {
     return(
 
         <div>
-            <h2>Subjects</h2>
+            <h2 className="text-center">Subjects</h2> {/* .text-center */}
             <hr />
             <table className="table table-striped table-hover">
                 <thead>
