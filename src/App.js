@@ -3,6 +3,37 @@ import { Link, Outlet, useNavigate } from "react-router-dom";
 import Alert from "./components/Alert";
 import Search from "./components/Search"; // Import the Search component
 
+const rolePermissions = {
+  public: ["/", "/subjects", "/faq"],
+  admin: ["/", "/subjects", "/faq", "/upload-document", "/moderate-document"],
+  moderator: [
+    "/",
+    "/subjects",
+    "/faq",
+    "/upload-document",
+    "/moderate-document",
+  ],
+  educator: ["/", "/subjects", "/faq", "/upload-document"],
+};
+
+const renderLinks = (role) => {
+  const allowedRoutes = rolePermissions[role || "public"];
+
+  return allowedRoutes.map((route) => {
+    let linkText =
+      route === "/" ? "Home" : route.replace("-", " ").replace("/", "");
+    return (
+      <Link
+        to={route}
+        key={route}
+        className="list-group-item list-group-item-action"
+      >
+        {linkText.charAt(0).toUpperCase() + linkText.slice(1)}
+      </Link>
+    );
+  });
+};
+
 function App() {
     const [jwtToken, setJwtToken] = useState("");
     const [userRole, setUserRole] = useState("");
@@ -115,11 +146,21 @@ function App() {
         }
     }, [jwtToken]);
 
-    // Handle search function that will later connect to the backend
-    const handleSearch = (query) => {
-        console.log("Search query:", query);
-        // You will later implement this to fetch from the backend
-    };
+  // Handle search function that connects to the backend
+  const handleSearch = (title, subject, grade) => {
+    const params = new URLSearchParams();
+    if (title.trim() !== "") {
+      params.append("title", title.trim());
+    }
+    if (subject.trim() !== "") {
+      params.append("subject", subject.trim());
+    }
+    if (grade.trim() !== "") {
+      params.append("grade", grade.trim());
+    }
+
+    navigate(`/search?${params.toString()}`);
+  };
 
     return (
         <div className="container">

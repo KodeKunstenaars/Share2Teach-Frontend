@@ -18,13 +18,13 @@ const router = createBrowserRouter([
     element: <App />,
     errorElement: <ErrorPage />,
     children: [
-      {index: true, element: <Home />},
+      {index: true, element: <Home />}, //default index route (Home page) //Order of routes is important!!
       {
         path: "/subjects",
         element: <Subjects/>
       },
       {
-        path: "/search/:query",
+        path: "/search", //route for subjects page
         element: <SearchResults/>
       },
       {
