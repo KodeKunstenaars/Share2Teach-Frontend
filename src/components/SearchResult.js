@@ -29,7 +29,7 @@ const SearchResults = () => {
         }
 
         // Use the full backend URL
-        const response = await fetch(`http://localhost:8080/search?${params.toString()}`, {
+        const response = await fetch(`/search?${params.toString()}`, {
           cache: 'no-store',
         });
 
