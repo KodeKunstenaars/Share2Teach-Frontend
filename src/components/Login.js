@@ -3,7 +3,7 @@ import Input from "./form/Input";
 import { useNavigate, useOutletContext } from "react-router-dom";
 
 // component that will display the login page
-const Authenticate = () => {
+const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
@@ -91,4 +91,4 @@ const Authenticate = () => {
     )
 }
 
-export default Authenticate;
+export default Login;

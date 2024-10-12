@@ -7,7 +7,7 @@ import Home from './components/Home';
 import Subjects from './components/Subjects';
 import AddDocuments from './components/AddDocuments';
 import ModerateDocuments from './components/ModerateDocuments';
-import Authenticate from './components/Authenticate';
+import Login from './components/Login';
 import Subject from './components/Subject';
 import Faq from './components/Faq';
 import SearchResults from './components/SearchResult';
@@ -18,34 +18,34 @@ const router = createBrowserRouter([
     element: <App />,
     errorElement: <ErrorPage />,
     children: [
-      {index: true, element: <Home />}, //default index route (Home page) //Order of routes is important!!
+      {index: true, element: <Home />},
       {
-        path: "/subjects", //route for subjects page
+        path: "/subjects",
         element: <Subjects/>
       },
       {
-        path: "/search/:query", //route for subjects page
+        path: "/search/:query",
         element: <SearchResults/>
       },
       {
-        path: "/subjects/:title", //route for subjects page
+        path: "/subjects/:title",
         element: <Subject/>
       },
       {
-        path: "/faq", //route for subjects page
+        path: "/faq",
         element: <Faq/>
       },
       {
-        path: "/upload-document", // route for upload page
+        path: "/upload-document",
         element: <AddDocuments/>
       },
       {
-        path: "/moderate-document", //route for moderation page
+        path: "/moderate-document",
         element: <ModerateDocuments/>
       },
       {
-        path: "/authenticate",
-        element: <Authenticate/>
+        path: "/login",
+        element: <Login/>
       },      
     ]
   }
