@@ -3,37 +3,6 @@ import { Link, Outlet, useNavigate } from "react-router-dom";
 import Alert from "./components/Alert";
 import Search from "./components/Search"; // Import the Search component
 
-const rolePermissions = {
-  public: ["/", "/subjects", "/faq"],
-  admin: ["/", "/subjects", "/faq", "/upload-document", "/moderate-document"],
-  moderator: [
-    "/",
-    "/subjects",
-    "/faq",
-    "/upload-document",
-    "/moderate-document",
-  ],
-  educator: ["/", "/subjects", "/faq", "/upload-document"],
-};
-
-const renderLinks = (role) => {
-  const allowedRoutes = rolePermissions[role || "public"];
-
-  return allowedRoutes.map((route) => {
-    let linkText =
-      route === "/" ? "Home" : route.replace("-", " ").replace("/", "");
-    return (
-      <Link
-        to={route}
-        key={route}
-        className="list-group-item list-group-item-action"
-      >
-        {linkText.charAt(0).toUpperCase() + linkText.slice(1)}
-      </Link>
-    );
-  });
-};
-
 function App() {
     const [jwtToken, setJwtToken] = useState("");
     const [userRole, setUserRole] = useState("");
@@ -170,12 +139,16 @@ function App() {
                     <h1 className="mt-3">Share2Teach</h1>
                 </div>
                 <div className="col d-flex justify-content-end align-items-center">
-                    {/* Include Search component next to the login/logout button */}
-                    <Search onSearch={handleSearch} />
+                    {/* Login/Logout button */}
                     {jwtToken === "" ? (
-                        <Link to="/login">
-                            <span className="badge bg-success ms-2">Login</span>
-                        </Link>
+                        <>
+                            <Link to="/login">
+                                <span className="badge bg-success ms-2">Login</span>
+                            </Link>
+                            <Link to="/register-user">
+                                <span className="badge bg-primary ms-2">Register</span>
+                            </Link>
+                        </>
                     ) : (
                         <a href="#!" onClick={logOut} className="ms-2">
                             <span className="badge bg-danger">Logout</span>
@@ -226,6 +199,16 @@ function App() {
                                         className="list-group-item list-group-item-action"
                                     >
                                         Moderate Document
+                                    </Link>
+                                )}
+                            {/* Links for Admins */}
+                            {jwtToken !== "" &&
+                                (userRole === "admin") && (
+                                    <Link
+                                        to="/create-user"
+                                        className="list-group-item list-group-item-action"
+                                    >
+                                        Create User
                                     </Link>
                                 )}
                         </div>
