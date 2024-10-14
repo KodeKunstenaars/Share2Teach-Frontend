@@ -4,13 +4,12 @@ import Alert from "./components/Alert";
 import Search from "./components/Search"; // Import the Search component
 
 function App() {
-    const [jwtToken, setJwtToken] = useState("");
-    const [userRole, setUserRole] = useState("");
+    // Initialize jwtToken and userRole from localStorage
+    const [jwtToken, setJwtToken] = useState(localStorage.getItem("jwtToken") || "");
+    const [userRole, setUserRole] = useState(localStorage.getItem("userRole") || "");
     const [alertMessage, setAlertMessage] = useState("");
     const [alertClassName, setAlertClassName] = useState("d-none");
-
     const [tickInterval, setTickInterval] = useState();
-
     const navigate = useNavigate();
 
     const logOut = () => {
@@ -26,18 +25,16 @@ function App() {
             .finally(() => {
                 setJwtToken("");
                 setUserRole("");
+                localStorage.removeItem("jwtToken");
+                localStorage.removeItem("userRole");
                 toggleRefresh(false);
+                navigate("/login");
             });
-
-        navigate("/login");
     };
 
     const toggleRefresh = useCallback(
         (status) => {
-            console.log("Clicked");
-
             if (status) {
-                console.log("Turning on ticking");
                 let i = setInterval(() => {
                     const requestOptions = {
                         method: "GET",
@@ -49,6 +46,7 @@ function App() {
                         .then((data) => {
                             if (data.access_token) {
                                 setJwtToken(data.access_token);
+                                localStorage.setItem("jwtToken", data.access_token); // Store in localStorage
                             }
                         })
                         .catch((error) => {
@@ -56,43 +54,27 @@ function App() {
                         });
                 }, 600000);
                 setTickInterval(i);
-                console.log("Setting tick interval to", i);
             } else {
-                console.log("Turning off ticking");
-                console.log("Turning off tickInterval", tickInterval);
-                setTickInterval(null);
                 clearInterval(tickInterval);
+                setTickInterval(null);
             }
         },
         [tickInterval]
     );
 
+    // Load jwtToken from localStorage when component mounts
     useEffect(() => {
-        if (jwtToken === "") {
-            const requestOptions = {
-                method: "GET",
-                credentials: "include",
-            };
-
-            fetch(`/refresh`, requestOptions)
-                .then((response) => response.json())
-                .then((data) => {
-                    if (data.access_token) {
-                        setJwtToken(data.access_token);
-                        toggleRefresh(true);
-                    }
-                })
-                .catch((error) => {
-                    console.log("User is not logged in", error);
-                });
+        const storedToken = localStorage.getItem("jwtToken");
+        if (storedToken && jwtToken === "") {
+            setJwtToken(storedToken);
+            toggleRefresh(true);
         }
     }, [jwtToken, toggleRefresh]);
 
-    // Decode the JWT token and extract the role from the payload
+    // Decode JWT token to extract the role
     useEffect(() => {
         if (jwtToken !== "") {
             try {
-                // Split the JWT token to get the payload (the second part)
                 const base64Url = jwtToken.split(".")[1];
                 const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
                 const jsonPayload = decodeURIComponent(
@@ -105,10 +87,9 @@ function App() {
                 );
 
                 const decodedPayload = JSON.parse(jsonPayload);
-
-                // Extract the role from the decoded payload and set it to userRole
-                setUserRole(decodedPayload.role || "");
-                console.log("Decoded role from token:", decodedPayload.role);
+                const role = decodedPayload.role || "";
+                setUserRole(role);
+                localStorage.setItem("userRole", role); // Store the role in localStorage
             } catch (error) {
                 console.error("Error decoding JWT token:", error);
             }
@@ -160,57 +141,26 @@ function App() {
 
             {/* Main Content Section */}
             <div className="row">
-                {/* Sidebar Navigation */}
                 <div className="col-md-2">
                     <nav>
                         <div className="list-group">
                             {/* Always Visible Links */}
-                            <Link to="/" className="list-group-item list-group-item-action">
-                                Home
-                            </Link>
-                            <Link
-                                to="/subjects"
-                                className="list-group-item list-group-item-action"
-                            >
-                                Subjects
-                            </Link>
-                            <Link to="/faq" className="list-group-item list-group-item-action">
-                                FAQ
-                            </Link>
+                            <Link to="/" className="list-group-item list-group-item-action">Home</Link>
+                            <Link to="/subjects" className="list-group-item list-group-item-action">Subjects</Link>
+                            <Link to="/faq" className="list-group-item list-group-item-action">FAQ</Link>
 
                             {/* Links for Educators, Admins, and Moderators */}
-                            {jwtToken !== "" &&
-                                (userRole === "educator" ||
-                                    userRole === "admin" ||
-                                    userRole === "moderator") && (
-                                    <Link
-                                        to="/upload-document"
-                                        className="list-group-item list-group-item-action"
-                                    >
-                                        Upload Document
-                                    </Link>
-                                )}
-
+                            {jwtToken !== "" && (userRole === "educator" || userRole === "admin" || userRole === "moderator") && (
+                                <Link to="/upload-document" className="list-group-item list-group-item-action">Upload Document</Link>
+                            )}
                             {/* Links for Admins and Moderators */}
-                            {jwtToken !== "" &&
-                                (userRole === "admin" || userRole === "moderator") && (
-                                    <Link
-                                        to="/moderate-document"
-                                        className="list-group-item list-group-item-action"
-                                    >
-                                        Moderate Document
-                                    </Link>
-                                )}
+                            {jwtToken !== "" && (userRole === "admin" || userRole === "moderator") && (
+                                <Link to="/moderate-document" className="list-group-item list-group-item-action">Moderate Document</Link>
+                            )}
                             {/* Links for Admins */}
-                            {jwtToken !== "" &&
-                                (userRole === "admin") && (
-                                    <Link
-                                        to="/create-user"
-                                        className="list-group-item list-group-item-action"
-                                    >
-                                        Create User
-                                    </Link>
-                                )}
+                            {jwtToken !== "" && userRole === "admin" && (
+                                <Link to="/create-user" className="list-group-item list-group-item-action">Create User</Link>
+                            )}
                         </div>
                     </nav>
                 </div>
