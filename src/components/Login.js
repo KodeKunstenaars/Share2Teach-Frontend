@@ -1,15 +1,15 @@
-import { useState } from "react";
+import {useState} from "react";
 import Input from "./form/Input";
-import { useNavigate, useOutletContext } from "react-router-dom";
+import {Link, useNavigate, useOutletContext} from "react-router-dom";
 
 const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    const { setJwtToken } = useOutletContext();
-    const { setAlertClassName } = useOutletContext();
-    const { setAlertMessage } = useOutletContext();
-    const { toggleRefresh } = useOutletContext();
+    const {setJwtToken} = useOutletContext();
+    const {setAlertClassName} = useOutletContext();
+    const {setAlertMessage} = useOutletContext();
+    const {toggleRefresh} = useOutletContext();
 
     const navigate = useNavigate();
 
@@ -77,7 +77,7 @@ const Login = () => {
     return (
         <div className="col-md-6 offset-md-3">
             <h2>Login</h2>
-            <hr />
+            <hr/>
 
             <form onSubmit={handleSubmit}>
                 <Input
@@ -104,6 +104,12 @@ const Login = () => {
                     className="btn btn-primary"
                     value="Login"
                 />
+                <Link to="/reset-password">
+                    <span type="submit"
+                          className="btn btn-primary">
+                        Reset Password
+                    </span>
+                </Link>
             </form>
         </div>
     );

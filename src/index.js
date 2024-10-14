@@ -14,6 +14,7 @@ import SearchResults from './components/SearchResult';
 import Register from "./components/Register";
 import CreateUser from "./components/CreateUser";
 import ProtectedRoute from "./components/ProtectedRoute";
+import Password from "./components/Password";
 
 const router = createBrowserRouter([
   {
@@ -26,6 +27,7 @@ const router = createBrowserRouter([
       { path: "/search", element: <SearchResults /> },
       { path: "/subjects/:title", element: <Subject /> },
       { path: "/faq", element: <Faq /> },
+      {path: "/reset-password", element: <Password />},
 
       // Protected routes
       {
