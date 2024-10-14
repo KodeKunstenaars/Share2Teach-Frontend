@@ -66,13 +66,18 @@ const AddDocument = () => {
       const { presigned_url, document_id } = presignedData;
 
       // Step 2: Upload the file to S3 using the presigned URL
-      const formData = new FormData();
-      formData.append("File", file, title); // "File" as key, file as value, title as filename
-
       const uploadResponse = await fetch(presigned_url, {
         method: "PUT",
-        body: formData,
+        headers: {
+          "Content-Type": file.type, // Set the correct content type
+        },
+        body: file, // Directly upload the file
       });
+
+      if (!uploadResponse.ok) {
+        const errorText = await uploadResponse.text();
+        throw new Error(`Failed to upload file to S3: ${errorText}`);
+      }
 
       if (!uploadResponse.ok) {
         const errorText = await uploadResponse.text();
