@@ -11,6 +11,8 @@ import Login from './components/Login';
 import Subject from './components/Subject';
 import Faq from './components/Faq';
 import SearchResults from './components/SearchResult';
+import Register from "./components/Register";
+import CreateUser from "./components/CreateUser";
 // routes are defined
 const router = createBrowserRouter([
   {
@@ -18,13 +20,13 @@ const router = createBrowserRouter([
     element: <App />,
     errorElement: <ErrorPage />,
     children: [
-      {index: true, element: <Home />},
+      {index: true, element: <Home />}, //default index route (Home page) //Order of routes is important!!
       {
         path: "/subjects",
         element: <Subjects/>
       },
       {
-        path: "/search/:query",
+        path: "/search", //route for subjects page
         element: <SearchResults/>
       },
       {
@@ -44,9 +46,17 @@ const router = createBrowserRouter([
         element: <ModerateDocuments/>
       },
       {
+        path: "/create-user",
+        element: <CreateUser/>
+      },
+      {
+        path: "/register-user",
+        element: <Register/>
+      },
+      {
         path: "/login",
         element: <Login/>
-      },      
+      },
     ]
   }
 ])
@@ -54,8 +64,7 @@ const router = createBrowserRouter([
 // Rendering the application and router setup to the DOM
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-    <RouterProvider router={router} />
-  </React.StrictMode>
+    <React.StrictMode>
+      <RouterProvider router={router} />
+    </React.StrictMode>
 );
-

@@ -115,10 +115,20 @@ function App() {
         }
     }, [jwtToken]);
 
-    // Handle search function that will later connect to the backend
-    const handleSearch = (query) => {
-        console.log("Search query:", query);
-        // You will later implement this to fetch from the backend
+    // Handle search function that connects to the backend
+    const handleSearch = (title, subject, grade) => {
+        const params = new URLSearchParams();
+        if (title.trim() !== "") {
+            params.append("title", title.trim());
+        }
+        if (subject.trim() !== "") {
+            params.append("subject", subject.trim());
+        }
+        if (grade.trim() !== "") {
+            params.append("grade", grade.trim());
+        }
+
+        navigate(`/search?${params.toString()}`);
     };
 
     return (
@@ -129,12 +139,16 @@ function App() {
                     <h1 className="mt-3">Share2Teach</h1>
                 </div>
                 <div className="col d-flex justify-content-end align-items-center">
-                    {/* Include Search component next to the login/logout button */}
-                    <Search onSearch={handleSearch} />
+                    {/* Login/Logout button */}
                     {jwtToken === "" ? (
-                        <Link to="/login">
-                            <span className="badge bg-success ms-2">Login</span>
-                        </Link>
+                        <>
+                            <Link to="/login">
+                                <span className="badge bg-success ms-2">Login</span>
+                            </Link>
+                            <Link to="/register-user">
+                                <span className="badge bg-primary ms-2">Register</span>
+                            </Link>
+                        </>
                     ) : (
                         <a href="#!" onClick={logOut} className="ms-2">
                             <span className="badge bg-danger">Logout</span>
@@ -185,6 +199,16 @@ function App() {
                                         className="list-group-item list-group-item-action"
                                     >
                                         Moderate Document
+                                    </Link>
+                                )}
+                            {/* Links for Admins */}
+                            {jwtToken !== "" &&
+                                (userRole === "admin") && (
+                                    <Link
+                                        to="/create-user"
+                                        className="list-group-item list-group-item-action"
+                                    >
+                                        Create User
                                     </Link>
                                 )}
                         </div>
