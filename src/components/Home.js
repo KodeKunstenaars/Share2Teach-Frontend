@@ -21,12 +21,12 @@ const Home = () => {
 
     return (
         <div className="text-center">
-            <h2>Welcome to Share2Teach</h2>
-            <hr />
+            <h2 className="subject-title">Welcome to Share2Teach</h2>
+            <hr/>
             {/* Add a large search bar like Google */}
             <div className="d-flex justify-content-center mt-4">
-                <div className="w-75">
-                    <Search onSearch={handleSearch} />
+                <div className="w-75 search-bar"> {/* Add the class name here */}
+                    <Search onSearch={handleSearch}/>
                 </div>
             </div>
         </div>

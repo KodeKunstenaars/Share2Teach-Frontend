@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Input from "./form/Input";
-import { useNavigate} from "react-router-dom"; // Import Link for navigation
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
     const [email, setEmail] = useState("");
@@ -8,10 +8,23 @@ const Register = () => {
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
 
+    const [creating, setCreating] = useState(false);
+    const [error, setError] = useState("");
+    const [successMessage, setSuccessMessage] = useState("");
+
     const navigate = useNavigate();
 
     const handleSubmit = (event) => {
         event.preventDefault();
+
+        if (!firstName || !lastName || !email || !password) {
+            setError("Please fill in all fields.");
+            return;
+        }
+
+        setCreating(true);
+        setError("");
+        setSuccessMessage("");
 
         let payload = {
             first_name: firstName,
@@ -31,19 +44,27 @@ const Register = () => {
         };
 
         fetch(`/register`, requestOptions)
-            .then((response) => response.json())
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error(`Error ${response.status}: ${response.statusText}`);
+                }
+                // If the response has no content, assume it's successful
+                return response.text().then((text) => (text ? JSON.parse(text) : null));
+            })
             .then((data) => {
-                if (data.error) {
-                    // Handle error (e.g., display an alert)
-                    console.error(data.message);
+                if (data && data.error) {
+                    setError(data.message || "Registration failed.");
                 } else {
-                    // Redirect to login or another page after successful registration
-                    navigate("/login");
+                    setSuccessMessage("User registered successfully!");
+                    // Optionally redirect to login after a few seconds
+                    setTimeout(() => navigate("/login"), 3000);
                 }
             })
             .catch(error => {
-                // Handle fetch error
-                console.error("Registration error:", error);
+                setError("Registration error: " + error.message);
+            })
+            .finally(() => {
+                setCreating(false);
             });
     };
 
@@ -52,6 +73,9 @@ const Register = () => {
             <h2>Register</h2>
             <hr />
 
+            {error && <div className="alert alert-danger">{error}</div>}
+            {successMessage && <div className="alert alert-success">{successMessage}</div>}
+
             <form onSubmit={handleSubmit}>
                 <Input
                     title="First Name"
@@ -59,6 +83,7 @@ const Register = () => {
                     className="form-control"
                     name="first_name"
                     onChange={(event) => setFirstName(event.target.value)}
+                    required
                 />
 
                 <Input
@@ -67,6 +92,7 @@ const Register = () => {
                     className="form-control"
                     name="last_name"
                     onChange={(event) => setLastName(event.target.value)}
+                    required
                 />
 
                 <Input
@@ -76,6 +102,7 @@ const Register = () => {
                     name="email"
                     autoComplete="email-new"
                     onChange={(event) => setEmail(event.target.value)}
+                    required
                 />
 
                 <Input
@@ -85,13 +112,15 @@ const Register = () => {
                     name="password"
                     autoComplete="password-new"
                     onChange={(event) => setPassword(event.target.value)}
+                    required
                 />
 
                 <hr />
                 <input
                     type="submit"
                     className="btn btn-primary"
-                    value="Register"
+                    value={creating ? "Registering..." : "Register"}
+                    disabled={creating}
                 />
             </form>
         </div>

@@ -99,17 +99,20 @@ const Login = () => {
                 />
 
                 <hr/>
-                <input
-                    type="submit"
-                    className="btn btn-primary"
-                    value="Login"
-                />
-                <Link to="/reset-password">
-                    <span type="submit"
-                          className="btn btn-primary">
-                        Reset Password
-                    </span>
-                </Link>
+
+                {/* Add d-flex and justify-content-between to move buttons apart */}
+                <div className="d-flex justify-content-between">
+                    <input
+                        type="submit"
+                        className="btn btn-primary btn-submit"
+                        value="Login"
+                    />
+                    <Link to="/reset-password">
+            <span className="btn btn-primary btn-reset">
+                Reset Password
+            </span>
+                    </Link>
+                </div>
             </form>
         </div>
     );

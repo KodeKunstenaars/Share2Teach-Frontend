@@ -83,8 +83,8 @@ const Subject = () => {
 
     return (
         <div>
-            <h2>{title}</h2>
-            <hr />
+            <h2 className="subject-title">{title}</h2>
+            <hr/>
             {documents.length > 0 ? (
                 <table className="table table-striped">
                     <thead>

@@ -55,47 +55,73 @@ const SearchResults = () => {
     fetchResults();
   }, [title, subject, grade]);
 
+  // Function to handle document download
+  const handleDownload = (docId) => {
+    fetch(`/download-document/${docId}`, {
+      method: "GET",
+    })
+        .then((response) => {
+          if (!response.ok) {
+            return response.text().then((text) => {
+              throw new Error(`Error ${response.status}: ${text}`);
+            });
+          }
+          return response.json();
+        })
+        .then((data) => {
+          // The backend should return a presigned URL
+          const downloadUrl = data.presigned_url;
+          window.open(downloadUrl, '_blank'); // Open the download in a new tab
+        })
+        .catch((err) => {
+          console.error("Download error:", err.message);
+        });
+  };
+
   if (loading) return <p>Loading...</p>;
   if (error) return <p>{error}</p>;
 
   return (
-    <div>
-      <h2>Search Results</h2>
-      <hr />
-      {results.length > 0 ? (
-        <table className="table table-striped">
-          <thead>
-            <tr>
-              <th>Document Title</th>
-              <th>Subject</th>
-              <th>Grade</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {results.map((result, index) => (
-              <tr key={result.id || result._id || index}>
-                <td>{result.title}</td>
-                <td>{result.subject}</td>
-                <td>{result.grade}</td>
-                <td>
-                  {/* Report button */}
-                  <button className="btn btn-sm btn-outline-danger me-2">
-                    Report
-                  </button>
-                  {/* Download button */}
-                  <button className="btn btn-sm btn-outline-primary">
-                    Download
-                  </button>
-                </td>
+      <div>
+        <h2 className="subject-title">Search Results</h2>
+        <hr/>
+        {results.length > 0 ? (
+            <table className="table table-striped">
+              <thead>
+              <tr>
+                <th>Document Title</th>
+                <th>Subject</th>
+                <th>Grade</th>
+                <th>Actions</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-      ) : (
-        <p>No results found for your search criteria.</p>
-      )}
-    </div>
+              </thead>
+              <tbody>
+              {results.map((result, index) => (
+                  <tr key={result.id || result._id || index}>
+                    <td>{result.title}</td>
+                    <td>{result.subject}</td>
+                    <td>{result.grade}</td>
+                    <td>
+                      {/* Report button */}
+                      <button className="btn btn-sm btn-outline-danger me-2">
+                        Report
+                      </button>
+                      {/* Download button */}
+                      <button
+                          className="btn btn-sm btn-outline-primary"
+                          onClick={() => handleDownload(result.id || result._id)}
+                      >
+                        Download
+                      </button>
+                    </td>
+                  </tr>
+              ))}
+              </tbody>
+            </table>
+        ) : (
+            <p>No results found for your search criteria.</p>
+        )}
+      </div>
   );
 };
 

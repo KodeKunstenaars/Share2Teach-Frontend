@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
-import { Link, Outlet, useNavigate } from "react-router-dom";
+import { Link, Outlet, useNavigate, useLocation } from "react-router-dom";
 import Alert from "./components/Alert";
-import Search from "./components/Search"; // Import the Search component
+import "./App.css";
 
 function App() {
     // Initialize jwtToken and userRole from localStorage
@@ -11,6 +11,7 @@ function App() {
     const [alertClassName, setAlertClassName] = useState("d-none");
     const [tickInterval, setTickInterval] = useState();
     const navigate = useNavigate();
+    const location = useLocation(); // Get the current route
 
     const logOut = () => {
         const requestOptions = {
@@ -96,90 +97,91 @@ function App() {
         }
     }, [jwtToken]);
 
-  // Handle search function that connects to the backend
-  const handleSearch = (title, subject, grade) => {
-    const params = new URLSearchParams();
-    if (title.trim() !== "") {
-      params.append("title", title.trim());
-    }
-    if (subject.trim() !== "") {
-      params.append("subject", subject.trim());
-    }
-    if (grade.trim() !== "") {
-      params.append("grade", grade.trim());
-    }
+    // Handle search function that connects to the backend
+    const handleSearch = (title, subject, grade) => {
+        const params = new URLSearchParams();
+        if (title.trim() !== "") {
+            params.append("title", title.trim());
+        }
+        if (subject.trim() !== "") {
+            params.append("subject", subject.trim());
+        }
+        if (grade.trim() !== "") {
+            params.append("grade", grade.trim());
+        }
 
-    navigate(`/search?${params.toString()}`);
-  };
+        navigate(`/search?${params.toString()}`);
+    };
 
     return (
-        <div className="container">
-            {/* Header Section */}
-            <div className="row">
-                <div className="col">
-                    <h1 className="mt-3">Share2Teach</h1>
-                </div>
-                <div className="col d-flex justify-content-end align-items-center">
-                    {/* Login/Logout button */}
-                    {jwtToken === "" ? (
-                        <>
-                            <Link to="/login">
-                                <span className="badge bg-success ms-2">Login</span>
-                            </Link>
-                            <Link to="/register-user">
-                                <span className="badge bg-primary ms-2">Register</span>
-                            </Link>
-                        </>
-                    ) : (
-                        <a href="#!" onClick={logOut} className="ms-2">
-                            <span className="badge bg-danger">Logout</span>
-                        </a>
-                    )}
-                </div>
-                <hr className="mb-3" />
+        <div className="app-wrapper">
+            {/* Sidebar Section */}
+            <div className="sidebar">
+                <nav>
+                    <div className="list-group">
+                        <Link to="/" className="list-group-item list-group-item-action">Home</Link>
+                        <Link to="/subjects" className="list-group-item list-group-item-action">Subjects</Link>
+                        <Link to="/faq" className="list-group-item list-group-item-action">FAQ</Link>
+
+                        {/* Links for Educators, Admins, and Moderators */}
+                        {jwtToken !== "" && (userRole === "educator" || userRole === "admin" || userRole === "moderator") && (
+                            <Link to="/upload-document" className="list-group-item list-group-item-action">Upload Document</Link>
+                        )}
+                        {/* Links for Admins and Moderators */}
+                        {jwtToken !== "" && (userRole === "admin" || userRole === "moderator") && (
+                            <Link to="/moderate-document" className="list-group-item list-group-item-action">Moderate Document</Link>
+                        )}
+                        {/* Links for Admins */}
+                        {jwtToken !== "" && userRole === "admin" && (
+                            <Link to="/create-user" className="list-group-item list-group-item-action">Create User</Link>
+                        )}
+                    </div>
+                </nav>
             </div>
 
             {/* Main Content Section */}
-            <div className="row">
-                <div className="col-md-2">
-                    <nav>
-                        <div className="list-group">
-                            {/* Always Visible Links */}
-                            <Link to="/" className="list-group-item list-group-item-action">Home</Link>
-                            <Link to="/subjects" className="list-group-item list-group-item-action">Subjects</Link>
-                            <Link to="/faq" className="list-group-item list-group-item-action">FAQ</Link>
+            <div className="main-content">
+                <div className="row">
+                    <div className="col-12 text-center">
+                        <h1 className="mt-3 title">Share2Teach</h1>
+                    </div>
+                    <div className="d-flex justify-content-end align-items-center">
+                        {jwtToken === "" ? (
+                            <>
+                                <div className="btn-container">
+                                    {/* Hide the Login button if we're on the /login route */}
+                                    {location.pathname !== "/login" && (
+                                        <Link to="/login">
+                                            <span className="btn btn-sm btn-approve me-2">Login</span>
+                                        </Link>
+                                    )}
 
-                            {/* Links for Educators, Admins, and Moderators */}
-                            {jwtToken !== "" && (userRole === "educator" || userRole === "admin" || userRole === "moderator") && (
-                                <Link to="/upload-document" className="list-group-item list-group-item-action">Upload Document</Link>
-                            )}
-                            {/* Links for Admins and Moderators */}
-                            {jwtToken !== "" && (userRole === "admin" || userRole === "moderator") && (
-                                <Link to="/moderate-document" className="list-group-item list-group-item-action">Moderate Document</Link>
-                            )}
-                            {/* Links for Admins */}
-                            {jwtToken !== "" && userRole === "admin" && (
-                                <Link to="/create-user" className="list-group-item list-group-item-action">Create User</Link>
-                            )}
-                        </div>
-                    </nav>
+                                    <Link to="/register-user">
+                                        <span className="btn btn-sm btn-approve me-2">Register</span>
+                                    </Link>
+                                </div>
+                            </>
+                        ) : (
+                            <div className="btn-container">
+                            <span className="btn btn-logout" onClick={logOut}>Logout</span>
+                            </div>
+                        )}
+                    </div>
+                    <hr className="mb-3" />
                 </div>
 
-                {/* Main Content Area */}
-                <div className="col-md-10">
-                    <Alert message={alertMessage} className={alertClassName} />
-                    <Outlet
-                        context={{
-                            jwtToken,
-                            setJwtToken,
-                            userRole,
-                            setUserRole,
-                            setAlertClassName,
-                            setAlertMessage,
-                            toggleRefresh,
-                        }}
-                    />
-                </div>
+                <Alert message={alertMessage} className={alertClassName} />
+                <Outlet
+                    context={{
+                        jwtToken,
+                        setJwtToken,
+                        userRole,
+                        setUserRole,
+                        setAlertClassName,
+                        setAlertMessage,
+                        toggleRefresh,
+                    }}
+                />
             </div>
         </div>
     );

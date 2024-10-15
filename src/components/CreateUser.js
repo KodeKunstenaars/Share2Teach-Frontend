@@ -67,7 +67,7 @@ const CreateUser = () => {
 
     return (
         <div className="container mt-5">
-            <h2>Create User</h2>
+            <h2 className="subject-title">Create User</h2>
             <hr />
             {error && <div className="alert alert-danger">{error}</div>}
             {successMessage && <div className="alert alert-success">{successMessage}</div>}
@@ -138,8 +138,8 @@ const CreateUser = () => {
                         onChange={(e) => setRole(e.target.value)}
                         required
                     >
-                        <option value="educator">Educator</option>
                         <option value="admin">Admin</option>
+                        <option value="educator">Educator</option>
                         <option value="moderator">Moderator</option>
                     </select>
                 </div>

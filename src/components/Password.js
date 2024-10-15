@@ -73,8 +73,8 @@ const Password = () => {
 
     return (
         <div className="container mt-5">
-            <h2>Password Reset</h2>
-            <hr />
+            <h2 className="subject-title">Password Reset</h2>
+            <hr/>
             {error && <div className="alert alert-danger">{error}</div>}
             {successMessage && (
                 <div className="alert alert-success">{successMessage}</div>

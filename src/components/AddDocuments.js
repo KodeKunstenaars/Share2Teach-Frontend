@@ -119,7 +119,7 @@ const AddDocument = () => {
 
   return (
     <div className="container mt-5">
-      <h2>Upload Document</h2>
+      <h2 className="subject-title">Upload Document</h2>
       <hr />
       {error && <div className="alert alert-danger">{error}</div>}
       {successMessage && (

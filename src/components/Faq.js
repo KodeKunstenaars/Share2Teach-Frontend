@@ -17,7 +17,7 @@ const Faq = () => {
   // display the FAQ list
     return(
         <div>
-            <h2>FAQ's</h2>
+            <h2 className="subject-title">FAQ's</h2>
             <hr />
             <table className="table table-striped table-hover">
                 <tbody>
