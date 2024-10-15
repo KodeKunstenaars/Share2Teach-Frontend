@@ -97,22 +97,6 @@ function App() {
         }
     }, [jwtToken]);
 
-    // Handle search function that connects to the backend
-    const handleSearch = (title, subject, grade) => {
-        const params = new URLSearchParams();
-        if (title.trim() !== "") {
-            params.append("title", title.trim());
-        }
-        if (subject.trim() !== "") {
-            params.append("subject", subject.trim());
-        }
-        if (grade.trim() !== "") {
-            params.append("grade", grade.trim());
-        }
-
-        navigate(`/search?${params.toString()}`);
-    };
-
     return (
         <div className="app-wrapper">
             {/* Sidebar Section */}

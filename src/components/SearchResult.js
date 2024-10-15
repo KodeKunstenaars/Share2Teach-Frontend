@@ -3,59 +3,46 @@ import { useLocation } from "react-router-dom";
 
 const SearchResults = () => {
   const location = useLocation();
-  const [results, setResults] = useState([]); // State to hold search results
-  const [loading, setLoading] = useState(true); // Loading state
-  const [error, setError] = useState(null); // Error state
+  const [results, setResults] = useState([]);
+  const [ratings, setRatings] = useState({});
+  const [successMessage, setSuccessMessage] = useState(null);
 
-  // Extract query parameters from the URL
   const searchParams = new URLSearchParams(location.search);
   const title = searchParams.get("title") || "";
   const subject = searchParams.get("subject") || "";
   const grade = searchParams.get("grade") || "";
 
-  // Fetch results from backend when component mounts
   useEffect(() => {
     const fetchResults = async () => {
       try {
         const params = new URLSearchParams();
-        if (title.trim() !== "") {
-          params.append("title", title.trim());
-        }
-        if (subject.trim() !== "") {
-          params.append("subject", subject.trim());
-        }
-        if (grade.trim() !== "") {
-          params.append("grade", grade.trim());
-        }
+        if (title.trim() !== "") params.append("title", title.trim());
+        if (subject.trim() !== "") params.append("subject", subject.trim());
+        if (grade.trim() !== "") params.append("grade", grade.trim());
 
-        // Use the full backend URL
         const response = await fetch(`/search?${params.toString()}`, {
           cache: 'no-store',
         });
 
         if (response.status === 404) {
           setResults([]);
-          setLoading(false);
           return;
         }
+
         if (!response.ok) {
           throw new Error(`Network response was not ok: ${response.statusText}`);
         }
+
         const data = await response.json();
-        console.log("Data received from backend:", data);
-        setResults(data); // Set the fetched data to the results state
-        setLoading(false); // Set loading to false after data is fetched
+        setResults(data);
       } catch (err) {
         console.error("Error fetching search results:", err);
-        setError("Error fetching search results");
-        setLoading(false);
       }
     };
 
     fetchResults();
   }, [title, subject, grade]);
 
-  // Function to handle document download
   const handleDownload = (docId) => {
     fetch(`/download-document/${docId}`, {
       method: "GET",
@@ -69,22 +56,55 @@ const SearchResults = () => {
           return response.json();
         })
         .then((data) => {
-          // The backend should return a presigned URL
           const downloadUrl = data.presigned_url;
-          window.open(downloadUrl, '_blank'); // Open the download in a new tab
+          window.open(downloadUrl, '_blank');
         })
         .catch((err) => {
           console.error("Download error:", err.message);
         });
   };
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>{error}</p>;
+  const handleRatingSubmit = async (docId, rating) => {
+    try {
+      const response = await fetch(`/rate-document/${docId}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ total_rating: rating }),
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`Error ${response.status}: ${errorText}`);
+      }
+
+      setSuccessMessage(`Rating for document ID ${docId} submitted successfully!`);
+    } catch (error) {
+      console.error("Error submitting rating:", error.message);
+      alert(`Error submitting rating: ${error.message}`);
+    }
+  };
+
+  const handleStarClick = (docId, rating) => {
+    setRatings((prevRatings) => ({
+      ...prevRatings,
+      [docId]: rating,
+    }));
+    handleRatingSubmit(docId, rating);
+  };
 
   return (
       <div>
         <h2 className="subject-title">Search Results</h2>
-        <hr/>
+        <hr />
+
+        {successMessage && (
+            <div className="alert alert-success" role="alert">
+              {successMessage}
+            </div>
+        )}
+
         {results.length > 0 ? (
             <table className="table table-striped">
               <thead>
@@ -93,6 +113,7 @@ const SearchResults = () => {
                 <th>Subject</th>
                 <th>Grade</th>
                 <th>Actions</th>
+                <th>Rating</th>
               </tr>
               </thead>
               <tbody>
@@ -102,17 +123,27 @@ const SearchResults = () => {
                     <td>{result.subject}</td>
                     <td>{result.grade}</td>
                     <td>
-                      {/* Report button */}
-                      <button className="btn btn-sm btn-outline-danger me-2">
-                        Report
-                      </button>
-                      {/* Download button */}
+                      <button className="btn btn-sm btn-outline-danger me-2">Report</button>
                       <button
                           className="btn btn-sm btn-outline-primary"
                           onClick={() => handleDownload(result.id || result._id)}
                       >
                         Download
                       </button>
+                    </td>
+                    <td>
+                      {/* Star Rating */}
+                      <div className="rating">
+                        {[1, 2, 3, 4, 5].map((star) => (
+                            <span
+                                key={star}
+                                className={`star ${ratings[result.id || result._id] >= star ? "filled" : ""}`}
+                                onClick={() => handleStarClick(result.id || result._id, star)}
+                            >
+                        &#9733;
+                      </span>
+                        ))}
+                      </div>
                     </td>
                   </tr>
               ))}

@@ -25,7 +25,7 @@ const ModerateDocuments = () => {
       headers: headers,
     };
 
-    fetch(`http://localhost:8080/admin-search`, requestOptions)
+    fetch(`/admin-search`, requestOptions)
         .then((response) => {
           if (!response.ok) {
             return response.text().then((text) => {
@@ -54,6 +54,29 @@ const ModerateDocuments = () => {
   const getModerationStatusClass = (moderated) => {
     return moderated ? "badge-approved" : "badge-pending";
   };
+
+    // Function to handle document download
+    const handleDownload = (docId) => {
+        fetch(`/download-document/${docId}`, {
+            method: "GET",
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    return response.text().then((text) => {
+                        throw new Error(`Error ${response.status}: ${text}`);
+                    });
+                }
+                return response.json();
+            })
+            .then((data) => {
+                // The backend should return a presigned URL
+                const downloadUrl = data.presigned_url;
+                window.open(downloadUrl, '_blank');
+            })
+            .catch((err) => {
+                console.error("Download error:", err.message);
+            });
+    };
 
   return (
       <div className="section fade-in">
@@ -87,9 +110,12 @@ const ModerateDocuments = () => {
                           </>
                       )}
                       {/* Always show Download button */}
-                      <button className="btn btn-sm btn-outline-primary">
-                        Download
-                      </button>
+                        <button
+                            className="btn btn-sm btn-outline-primary"
+                            onClick={() => handleDownload(doc.id || doc._id)}
+                        >
+                            Download
+                        </button>
                     </div>
                   </div>
               ))}
