@@ -20,6 +20,7 @@ const Subject = () => {
             headers: headers,
         };
 
+        // Use the correct backend URL
         fetch(`/search?subject=${encodeURIComponent(title)}`, requestOptions)
             .then((response) => {
                 if (!response.ok) {
@@ -54,6 +55,7 @@ const Subject = () => {
                 return response.json();
             })
             .then((data) => {
+                // The backend should return a presigned URL
                 const downloadUrl = data.presigned_url;
                 window.open(downloadUrl, '_blank'); // Open the download in a new tab
             })
