@@ -4,6 +4,43 @@
     min-height: 100vh;
 }
 
+/* Style for the icon button */
+.btn-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    border-radius: 50%;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+/*IMPORTANT*/
+/* Force the hover background color to override other styles */
+.btn-icon:hover {
+    background-color: #007BFFFF !important; /* Ensure this background color is applied */
+    transform: scale(1.1); /* Slight zoom effect on hover */
+}
+
+/* Active state when the button is clicked */
+.btn-icon:active {
+    transform: scale(0.95); /* Shrink a little on click */
+}
+
+/* If you're using an icon font or SVG */
+.btn-icon svg {
+    width: 24px;
+    height: 24px;
+    fill: currentColor; /* Ensures it matches the text color */
+}
+
+/* Adjust for screen responsiveness */
+@media (max-width: 600px) {
+    .btn-icon {
+        padding: 8px;
+        font-size: 1.2rem; /* Reduce icon size on smaller screens */
+    }
+}
+
 /* Sidebar styling to make it vertical and fixed */
 .sidebar {
     position: fixed;

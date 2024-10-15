@@ -43,7 +43,14 @@ const Search = () => {
         <button
           className="btn btn-icon"
           onClick={() => setIsSearchOpen(true)}
-          style={{ background: "none", border: "none", cursor: "pointer" }}
+          style={{
+            background: "black",
+            border: "none",
+            cursor: "pointer",
+            padding: "10px",
+            transition: "all 0.3s ease",
+            fontSize: "1.5rem", // This can be adjusted based on the size of your icon
+          }}
         >
           <i className="fas fa-search" style={{ fontSize: "1.5rem" }}></i>
         </button>

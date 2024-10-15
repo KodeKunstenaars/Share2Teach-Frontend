@@ -126,7 +126,8 @@ function App() {
             {/* Main Content Section */}
             <div className="main-content">
                 <div className="row">
-                    <div className="col-12 text-center">
+                    <div className="col-12 text-center" style={{ marginBottom: '-100px' }}>
+
                         <h1 className="mt-3 title">Share2Teach</h1>
                     </div>
                     <div className="d-flex justify-content-end align-items-center">
@@ -151,7 +152,7 @@ function App() {
                             </div>
                         )}
                     </div>
-                    <hr className="mb-3" />
+                    <hr className="mb-1" />
                 </div>
 
                 <Alert message={alertMessage} className={alertClassName} />

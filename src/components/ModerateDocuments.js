@@ -140,7 +140,7 @@ const ModerateDocuments = () => {
 
   return (
     <div>
-      <h2>Moderate Documents</h2>
+      <h2 className="subject-title">Moderate Documents</h2>
       <hr />
       {loading ? (
         <p>Loading documents...</p>
