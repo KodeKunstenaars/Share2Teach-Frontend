@@ -9,17 +9,20 @@
   background-color: #111; /* Black background */
   overflow-x: hidden; /* Disable horizontal scroll */
   transition: 0.5s; /* Smooth transition for width */
-  padding-top: 60px; /* Padding for links */
+  padding-top: 40px; /* Padding for links */
 }
 
 /* Header background style */
+/* Header background style */
 header {
-background-color: #90ee90; /* Light green color */
-padding: 2px; /* Add some padding for spacing */
-display: flex;
-justify-content: space-between;
-align-items: center;
+  background-color: #3fb2d8; /* Light blue color */
+  padding: 2px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 94vw; /* Full width of the viewport */
 }
+
 
 
 /* Links inside the side navigation */
@@ -55,11 +58,11 @@ align-items: center;
 .hamburger {
   font-size: 30px;
   cursor: pointer;
-  position: absolute;
-  top: 15px;
-  left: 15px;
-  z-index: 2;
   color: black;
+  background-color: #3fb2d8; /* Light blue background */
+  padding: 10px; /* Padding for the clickable area */
+  border-radius: 5px; /* Rounded corners */
+  margin-right: 15px; /* Adjust spacing between icon and title */
 }
 
 /* Shifted content when sidenav is open */

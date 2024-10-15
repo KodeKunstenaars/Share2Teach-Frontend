@@ -59,15 +59,17 @@ function App() {
 
   return (
     <div className="container">
-      <div className="row">
-        <div className="col">
+      <div className="row"></div>
+      <header className="d-flex justify-content-between align-items-center"> {/* Header layout with flexbox */}
+        <div> {/* Left section for hamburger and title */}
           {/* Hamburger icon */}
           <span className="hamburger" onClick={toggleNav}>
             &#9776; {/* Three lines for the hamburger menu */}
           </span>
           <h1 className="mt-3">Share2Teach</h1>
         </div>
-        <div className="col d-flex justify-content-end align-items-center">
+
+        <div className="d-flex align-items-center"> {/* Right section for search and login */}
           <Search onSearch={handleSearch} />
           {jwtToken === "" ? (
             <Link to="/authenticate">
@@ -79,8 +81,9 @@ function App() {
             </a>
           )}
         </div>
-        <hr className="mb-3" />
-      </div>
+      </header>
+
+      <hr className="mb-3" />
 
       {/* Side Navigation */}
       <div className={`sidenav ${isNavOpen ? 'open' : ''}`}>
