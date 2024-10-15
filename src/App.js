@@ -58,18 +58,15 @@ function App() {
   };
 
   return (
-    <div className="container">
-      <div className="row"></div>
-      <header className="d-flex justify-content-between align-items-center"> {/* Header layout with flexbox */}
-        <div> {/* Left section for hamburger and title */}
-          {/* Hamburger icon */}
+    <div className="container-fluid">
+      <header className="d-flex justify-content-between align-items-center">
+        <div className="d-flex align-items-center">
           <span className="hamburger" onClick={toggleNav}>
-            &#9776; {/* Three lines for the hamburger menu */}
+            &#9776; {/* Hamburger icon */}
           </span>
-          <h1 className="mt-3">Share2Teach</h1>
+          <h1 className="mt-3 mb-0 ms-2">Share2Teach</h1>
         </div>
-
-        <div className="d-flex align-items-center"> {/* Right section for search and login */}
+        <div className="d-flex align-items-center">
           <Search onSearch={handleSearch} />
           {jwtToken === "" ? (
             <Link to="/authenticate">
@@ -82,15 +79,15 @@ function App() {
           )}
         </div>
       </header>
-
+  
       <hr className="mb-3" />
-
+  
       {/* Side Navigation */}
       <div className={`sidenav ${isNavOpen ? 'open' : ''}`}>
         <a href="#" className="closebtn" onClick={toggleNav}>&times;</a>
         {renderLinks(jwtToken, toggleNav)}
       </div>
-
+  
       <div className={`row ${isNavOpen ? 'shifted-content' : ''}`}>
         <div className="col-md-10 offset-md-2">
           <Alert message={alertMessage} className={alertClassName} />
@@ -106,6 +103,7 @@ function App() {
       </div>
     </div>
   );
+  
 }
 
 export default App;
