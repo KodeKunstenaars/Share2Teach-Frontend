@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-// Component to display all available subjects
+// component will display all available subjects
 const Subjects = () => {
     const [subjects, setSubjects] = useState([]);
 
@@ -25,29 +25,20 @@ const Subjects = () => {
     }, []);
 
     return (
-        <div>
-            <h2>Subjects</h2>
-            <hr />
-            <table className="table table-striped table-hover">
-                <thead>
-                    <tr>
-                        <th>Subject</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {subjects.map((m) => (
-                        <tr key={m.id}>
-                            <td>
-                                <Link to={`/subjects/${encodeURIComponent(m.title)}`}>
-                                    {m.title}
-                                </Link>
-                            </td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
+        <div className="section fade-in">
+            <h2 className="subject-title">Subjects</h2>
+            <hr/>
+            <div className="subject-container">
+                {subjects.map((subject) => (
+                    <div key={subject.id} className="subject-card">
+                        <Link to={`/subjects/${subject.title}`} className="subject-link">
+                            {subject.title}
+                        </Link>
+                    </div>
+                ))}
+            </div>
         </div>
     );
-};
+}
 
 export default Subjects;
