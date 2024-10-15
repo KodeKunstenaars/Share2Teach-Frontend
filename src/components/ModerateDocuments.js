@@ -208,7 +208,7 @@ const ModerateDocuments = () => {
           </table>
         </div>
       ) : (
-        <p>No documents to moderate.</p>
+          <p>No documents to moderate.</p>
       )}
     </div>
   );
