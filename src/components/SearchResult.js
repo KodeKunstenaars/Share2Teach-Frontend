@@ -1,16 +1,20 @@
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useOutletContext } from "react-router-dom";
+import ReportButton from "./ReportButton";
 
 const SearchResults = () => {
   const location = useLocation();
   const [results, setResults] = useState([]);
   const [ratings, setRatings] = useState({});
   const [successMessage, setSuccessMessage] = useState(null);
+  const [showButtons, setShowButtons] = useState(true);
 
   const searchParams = new URLSearchParams(location.search);
   const title = searchParams.get("title") || "";
   const subject = searchParams.get("subject") || "";
   const grade = searchParams.get("grade") || "";
+
+  const { jwtToken } = useOutletContext();
 
   useEffect(() => {
     const fetchResults = async () => {
@@ -43,6 +47,7 @@ const SearchResults = () => {
     fetchResults();
   }, [title, subject, grade]);
 
+
   const handleDownload = (docId) => {
     fetch(`/download-document/${docId}`, {
       method: "GET",
@@ -62,6 +67,37 @@ const SearchResults = () => {
         .catch((err) => {
           console.error("Download error:", err.message);
         });
+  };
+
+  // Handle the report submission
+  const handleReport = (documentId, reportReason) => {
+    const headers = new Headers();
+    headers.append("Content-Type", "application/json");
+    headers.append("Authorization", `Bearer ${jwtToken}`);
+
+    const body = JSON.stringify({
+      reason: reportReason, // Only send the reason
+    });
+
+    fetch(`/report-document/${documentId}`, {
+      method: 'POST',
+      headers: headers,
+      body: body,
+    })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error('Failed to submit report');
+          }
+          alert('Report submitted successfully!');
+          setShowButtons(true);
+        })
+        .catch((error) => {
+          console.error('Error submitting report:', error);
+          setShowButtons(true);
+        });
+
+    setShowButtons(false); // Hide buttons while reporting
+
   };
 
   const handleRatingSubmit = async (docId, rating) => {
@@ -123,7 +159,12 @@ const SearchResults = () => {
                     <td>{result.subject}</td>
                     <td>{result.grade}</td>
                     <td>
-                      <button className="btn btn-sm btn-outline-danger me-2">Report</button>
+                      <ReportButton
+                          documentId={result._id}
+                          onReport={handleReport}
+                          showButtons={showButtons}
+                          setShowButtons={setShowButtons}  // Pass the setter function
+                      />
                       <button
                           className="btn btn-sm btn-outline-primary"
                           onClick={() => handleDownload(result.id || result._id)}
