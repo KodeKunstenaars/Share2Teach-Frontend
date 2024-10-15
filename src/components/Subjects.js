@@ -1,68 +1,30 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-// component will display all available subjects
+// Component to display all available subjects
 const Subjects = () => {
     const [subjects, setSubjects] = useState([]);
 
-    useEffect( () => {
+    useEffect(() => {
         let subjectList = [
-            {
-                id: 1,
-                title: "Mathematics",
-            },
-            {
-                id: 2,
-                title: "Business Studies",
-            },
-            {
-                id: 3,
-                title: "History",
-            },
-            {
-                id: 4,
-                title: "Geography",
-            },
-            {
-                id: 5,
-                title: "Natural Science",
-            },
-            {
-                id: 6,
-                title: "Life Science",
-            },
-            {
-                id: 7,
-                title: "English",
-            },
-            {
-                id: 8,
-                title: "Technology",
-            },
-            {
-                id: 9,
-                title: "Afrikaans",
-            },
-            {
-                id: 10,
-                title: "Life Skills",
-            },
-            {
-                id: 11,
-                title: "Computer Science",
-            },
-            {
-                id: 12,
-                title: "Other",
-            },
-            
-            
+            { id: 1, title: "Mathematics" },
+            { id: 2, title: "Business Studies" },
+            { id: 3, title: "History" },
+            { id: 4, title: "Geography" },
+            { id: 5, title: "Natural Science" },
+            { id: 6, title: "Life Science" },
+            { id: 7, title: "English" },
+            { id: 8, title: "Technology" },
+            { id: 9, title: "Afrikaans" },
+            { id: 10, title: "Life Skills" },
+            { id: 11, title: "Computer Science" },
+            { id: 12, title: "Other" },
         ];
 
-        setSubjects(subjectList)
+        setSubjects(subjectList);
     }, []);
-    return(
 
+    return (
         <div>
             <h2>Subjects</h2>
             <hr />
@@ -76,18 +38,16 @@ const Subjects = () => {
                     {subjects.map((m) => (
                         <tr key={m.id}>
                             <td>
-                                <Link to= {`/subjects/${m.title}`}>
+                                <Link to={`/subjects/${encodeURIComponent(m.title)}`}>
                                     {m.title}
                                 </Link>
                             </td>
-                        </tr>    
+                        </tr>
                     ))}
                 </tbody>
             </table>
-
         </div>
-    
-    )
-}
+    );
+};
 
 export default Subjects;
