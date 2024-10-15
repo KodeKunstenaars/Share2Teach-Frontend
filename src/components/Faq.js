@@ -1,24 +1,33 @@
 import React, { useState, useEffect } from 'react';
+import '../styles/Faq.css'; // Import the updated CSS
 
 function FAQ() {
     const [faqs, setFaqs] = useState([]);
+    const [activeIndex, setActiveIndex] = useState(null);
 
     useEffect(() => {
-        // Use the full URL of your backend API
-        fetch('http://localhost:8080/faqs') // Update with your actual backend URL
+        fetch('http://localhost:8080/faqs') // Replace with your actual backend URL
             .then(response => response.json())
             .then(data => setFaqs(data))
             .catch(error => console.error('Error fetching FAQs:', error));
     }, []);
 
+    const toggleFAQ = index => {
+        setActiveIndex(activeIndex === index ? null : index);
+    };
+
     return (
-        <div>
-            <h2 className="text-center">FAQ</h2> {/* .text-center */}
+        <div className="faq-container">
+            <h2 className="faq-heading">FAQ</h2>
             <ul>
-                {faqs.map(faq => (
-                    <li key={faq.id}>
-                        <strong>{faq.question}</strong>
-                        <p>{faq.answer}</p>
+                {faqs.map((faq, index) => (
+                    <li key={faq.id} className={`faq-item ${activeIndex === index ? 'active' : ''}`}>
+                        <div className="faq-question" onClick={() => toggleFAQ(index)}>
+                            {faq.question}
+                        </div>
+                        <div className="faq-answer">
+                            <p>{faq.answer}</p>
+                        </div>
                     </li>
                 ))}
             </ul>
