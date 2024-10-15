@@ -18,7 +18,7 @@ function FAQ() {
 
     return (
         <div className="faq-container">
-            <h2 className="faq-heading">FAQ</h2>
+            <h2 className="faq-heading">FAQ</h2> {/* .text-center */}
             <ul>
                 {faqs.map((faq, index) => (
                     <li key={faq.id} className={`faq-item ${activeIndex === index ? 'active' : ''}`}>

@@ -1,5 +1,4 @@
-.text-center {
-    text-align: center; /* Center the text */
+.text-center { /* Center the text */
     font-size: 2rem;
     margin-bottom: 1.5rem;
 }
@@ -32,7 +31,7 @@ li {
 .faq-question {
     cursor: pointer; /* Makes the question clickable */
     padding: 1rem;
-    background-color: #174c80; /* Dark blue background */
+    background-color: #3f668d; /* Dark blue background */
     color: white; /* White text for contrast */
     font-weight: bold;
     border-radius: 8px 8px 0 0; /* Rounded top corners */
@@ -55,7 +54,7 @@ li {
 /* Answer styling (initially hidden) */
 .faq-answer {
     padding: 1rem;
-    background-color: #2664b0; /* Lighter dark blue for the answer */
+    background-color: #5f8ec6; /* Lighter dark blue for the answer */
     color: white;
     border-radius: 0 0 8px 8px; /* Rounded bottom corners */
     display: none; /* Hide by default */

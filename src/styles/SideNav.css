@@ -14,14 +14,13 @@
 
 /* Header background style */
 header {
-  background-color: #add8e6; /* Light blue background */
-  padding: 10px;
+  background-color: #055772; /* Light blue background */
+  padding: 2px;
   display: flex; /* Use flexbox for layout */
   align-items: center; /* Vertically center items */
   justify-content: space-between; /* Space between elements */
   width: 100%; /* Ensure header takes full width */
 }
-
 
 /* Links inside the side navigation */
 .sidenav a {
@@ -56,14 +55,15 @@ header {
 .hamburger {
   font-size: 30px;
   cursor: pointer;
-  background-color: #add8e6; /* Background for the hamburger icon */
+  background-color: #055772; /* Background for the hamburger icon */
   border: none; /* Remove any border */
-  color: black; /* Icon color */
+  color: white; /* Icon color */
   margin-right: 15px; /* Space between hamburger and title */
 }
 
 h1{
   margin: 0; /* Remove default margin to reduce space */
+  color: white;
 }
 
 /* Shifted content when sidenav is open */
