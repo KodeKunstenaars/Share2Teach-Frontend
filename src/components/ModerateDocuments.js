@@ -3,7 +3,7 @@
 const ModerateDocuments = () => {
     return(
         <div>
-            <h2>Moderate Documents</h2>
+            <h2 className="text-center">Moderate Document</h2> {/* .text-center */}
             <hr />
         </div>
     )

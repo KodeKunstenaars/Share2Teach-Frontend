@@ -3,7 +3,7 @@
 const AddDocuments = () => {
     return(
         <div>
-            <h2>Add a document</h2>
+            <h2 className="text-center">Add a document</h2> {/* .text-center */}
             <hr />
         </div>
     )
