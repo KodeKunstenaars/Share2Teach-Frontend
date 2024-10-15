@@ -360,6 +360,25 @@ table td {
     color: #ffcc00;
 }
 
+.report-modal select {
+    width: 38%;
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f8f9fa; /* Light background color */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Slight shadow for depth */
+    transition: border-color 0.2s ease-in-out;
+}
+
+.report-modal select:focus {
+    border-color: #dc3545; /* Bootstrap danger color on focus */
+    outline: none; /* Remove the default outline */
+}
+
+.report-modal option {
+    padding: 10px;
+}
 @keyframes fadeIn {
     0% {
         opacity: 0;

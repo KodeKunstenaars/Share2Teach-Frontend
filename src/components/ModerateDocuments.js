@@ -114,6 +114,7 @@ const ModerateDocuments = () => {
     }
   };
 
+
     // Function to handle document download
     const handleDownload = (docId) => {
         fetch(`/download-document/${docId}`, {
