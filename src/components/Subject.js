@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useOutletContext } from "react-router-dom";
+import ReportButton from "./ReportButton";
 
 const Subject = () => {
     const [documents, setDocuments] = useState([]);
@@ -7,9 +8,12 @@ const Subject = () => {
     const [loading, setLoading] = useState(true);
     const [ratings, setRatings] = useState({});
     const [successMessage, setSuccessMessage] = useState(null);
+    const [showButtons, setShowButtons] = useState(true);
 
     // Gets subject title from URL
     let { title } = useParams();
+
+    const { jwtToken } = useOutletContext();
 
     useEffect(() => {
         const headers = new Headers();
@@ -96,6 +100,37 @@ const Subject = () => {
         }
     };
 
+    // Handle the report submission
+    const handleReport = (documentId, reportReason) => {
+        const headers = new Headers();
+        headers.append("Content-Type", "application/json");
+        headers.append("Authorization", `Bearer ${jwtToken}`);
+
+        const body = JSON.stringify({
+            reason: reportReason, // Only send the reason
+        });
+
+        fetch(`/report-document/${documentId}`, {
+            method: 'POST',
+            headers: headers,
+            body: body,
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error('Failed to submit report');
+                }
+                alert('Report submitted successfully!');
+                setShowButtons(true);
+            })
+            .catch((error) => {
+                console.error('Error submitting report:', error);
+                setShowButtons(true);
+            });
+
+        setShowButtons(false); // Hide buttons while reporting
+
+    };
+
     if (loading) {
         return (
             <div>
@@ -141,9 +176,14 @@ const Subject = () => {
                             <td>{doc.title}</td>
                             <td>{doc.grade}</td>
                             <td>
-                                <button className="btn btn-sm btn-outline-danger me-2">
-                                    Report
-                                </button>
+                                {/* Pass showButtons to ReportButton */}
+                                <ReportButton
+                                    documentId={doc._id}
+                                    onReport={handleReport}
+                                    showButtons={showButtons}
+                                    setShowButtons={setShowButtons}  // Pass the setter function
+                                />
+                                {/* Conditionally display the download button based on showButtons */}
                                 <button
                                     className="btn btn-sm btn-outline-primary"
                                     onClick={() => handleDownload(doc.id || doc._id)}

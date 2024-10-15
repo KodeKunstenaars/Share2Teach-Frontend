@@ -114,10 +114,6 @@ const ModerateDocuments = () => {
     }
   };
 
-  // Function to determine moderation status class
-  const getModerationStatusClass = (moderated) => {
-    return moderated ? "badge-approved" : "badge-pending";
-  };
 
     // Function to handle document download
     const handleDownload = (docId) => {

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-const ReportButton = ({ documentId, onReport, showButtons, setShowButtons}) => {
+const ReportButton = ({ documentId, onReport, showButtons, setShowButtons }) => {
     const [isReporting, setIsReporting] = useState(false);
     const [reportReason, setReportReason] = useState('');
 
@@ -10,7 +10,7 @@ const ReportButton = ({ documentId, onReport, showButtons, setShowButtons}) => {
             console.log("Submitting report for document:", documentId); // Add this log
             onReport(documentId, reportReason);
             setIsReporting(false); // Close the modal or form
-            setShowButtons(true); // show buttons again after submitting report
+            setShowButtons(true); // Show buttons again after submitting report
         } else {
             console.log("No report reason selected.");
         }
@@ -24,21 +24,22 @@ const ReportButton = ({ documentId, onReport, showButtons, setShowButtons}) => {
     return (
         <>
             {/* Hide the report button when modal is open */}
-            {showButtons && <button onClick={() => { setIsReporting(true); setShowButtons(false); }}>Report</button>}
+            {showButtons && <button className="btn btn-sm btn-outline-danger me-2" onClick={() => { setIsReporting(true); setShowButtons(false); }}>Report</button>}
             {isReporting && (
                 <div className="report-modal">
                     <h4>Report Document</h4>
-                    <select value={reportReason} onChange={(e) => setReportReason(e.target.value)}>
+                    <select className="form-select" value={reportReason} onChange={(e) => setReportReason(e.target.value)}>
                         <option value="">Select reason</option>
                         <option value="inappropriate">Inappropriate content</option>
                         <option value="spam">Spam</option>
                         <option value="other">Other</option>
                     </select>
-                    <button onClick={handleSubmit}>Submit Report</button>
-                    <button onClick={handleCancel}>Cancel</button>
+                    <button className="btn btn-sm btn-outline-danger me-2" onClick={handleSubmit}>Submit Report</button>
+                    <button className="btn btn-sm btn-outline-danger me-2" onClick={handleCancel}>Cancel</button>
                 </div>
             )}
         </>
     );
 };
+
 export default ReportButton;
