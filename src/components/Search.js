@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import '../styles/Search.css';
 
 const Search = () => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
