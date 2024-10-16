@@ -39,7 +39,7 @@ const Login = () => {
                     setAlertMessage(data.message);
                 } else {
                     const jwtToken = data.access_token;
-                    setJwtToken(jwtToken); // Store the JWT token in state
+                    setJwtToken(jwtToken); 
 
                     // Store the JWT token in localStorage
                     localStorage.setItem("jwtToken", jwtToken);
@@ -64,8 +64,8 @@ const Login = () => {
                     // Clear any error messages and navigate to the homepage
                     setAlertClassName("d-none");
                     setAlertMessage("");
-                    toggleRefresh(true); // Start token refreshing
-                    navigate("/"); // Redirect to home
+                    toggleRefresh(true); 
+                    navigate("/"); 
                 }
             })
             .catch(error => {
@@ -99,8 +99,6 @@ const Login = () => {
                 />
 
                 <hr/>
-
-                {/* Add d-flex and justify-content-between to move buttons apart */}
                 <div className="d-flex justify-content-between">
                     <input
                         type="submit"

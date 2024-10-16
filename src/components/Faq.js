@@ -1,34 +1,34 @@
 import React, { useState, useEffect } from 'react';
-import '../styles/Faq.css'; // Import the updated CSS
+import '../styles/collapse.css'; // Import your CSS
 
 function FAQ() {
     const [faqs, setFaqs] = useState([]);
-    const [activeIndex, setActiveIndex] = useState(null);
+    const [activeIndex, setActiveIndex] = useState(null); // Track the active index
 
     useEffect(() => {
-        fetch('http://localhost:8080/faqs') // Replace with your actual backend URL
+        fetch('/faqs')
             .then(response => response.json())
             .then(data => setFaqs(data))
             .catch(error => console.error('Error fetching FAQs:', error));
     }, []);
 
     const toggleFAQ = index => {
+        // Toggle the clicked question: close if active, open if not
         setActiveIndex(activeIndex === index ? null : index);
     };
 
-
-    // display the FAQ list
-    return(
-        <div>
+    return (
+        <div className="faq-container">
             <h2 className="subject-title">FAQ's</h2>
             <hr />
-            <ul>
+            <ul className="faq-list">
                 {faqs.map((faq, index) => (
                     <li key={faq.id} className={`faq-item ${activeIndex === index ? 'active' : ''}`}>
                         <div className="faq-question" onClick={() => toggleFAQ(index)}>
                             {faq.question}
                         </div>
-                        <div className="faq-answer">
+                        {/* Conditionally render the answer based on whether it's active */}
+                        <div className="faq-answer" style={{ maxHeight: activeIndex === index ? '500px' : '0' }}>
                             <p>{faq.answer}</p>
                         </div>
                     </li>

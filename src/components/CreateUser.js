@@ -6,7 +6,7 @@ const CreateUser = () => {
     const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [role, setRole] = useState("Educator"); // Default to "Educator"
+    const [role, setRole] = useState("Educator"); 
     const [qualification, setQualification] = useState("");
 
     // State variables for handling responses and errors
@@ -14,7 +14,7 @@ const CreateUser = () => {
     const [error, setError] = useState("");
     const [successMessage, setSuccessMessage] = useState("");
 
-    // Function to handle form submission
+   
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -55,7 +55,7 @@ const CreateUser = () => {
             setLastName("");
             setEmail("");
             setPassword("");
-            setRole("educator"); // Reset to default
+            setRole("educator");
             setQualification("");
         } catch (err) {
             console.error(err);

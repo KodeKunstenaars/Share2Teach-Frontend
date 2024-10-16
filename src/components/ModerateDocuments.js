@@ -5,9 +5,9 @@ const ModerateDocuments = () => {
   const [documents, setDocuments] = useState([]);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
-  const [successMessage, setSuccessMessage] = useState(null); // State for success messages
+  const [successMessage, setSuccessMessage] = useState(null); 
 
-  // Access jwtToken from context
+
   const { jwtToken } = useOutletContext();
 
   useEffect(() => {
@@ -26,7 +26,7 @@ const ModerateDocuments = () => {
       headers: headers,
     };
 
-    // Use the full backend URL
+    
     fetch(`/admin-search`, requestOptions)
       .then((response) => {
         if (!response.ok) {
@@ -45,7 +45,7 @@ const ModerateDocuments = () => {
         setError(err.message);
         setLoading(false);
       });
-  }, [jwtToken]); // Dependency array includes jwtToken
+  }, [jwtToken]); 
 
   // Function to approve or deny a document
   const handleModeration = (docId, action) => {
@@ -58,7 +58,7 @@ const ModerateDocuments = () => {
       headers: headers,
       body: JSON.stringify({
         approvalStatus: action, // "approved" or "denied"
-        comments: "", // Optional: add a field to capture comments from the UI if necessary
+        comments: "", 
       }),
     };
 
@@ -72,7 +72,7 @@ const ModerateDocuments = () => {
         return response.json();
       })
       .then(() => {
-        setSuccessMessage(`Document has been ${action} successfully.`); // Set success message
+        setSuccessMessage(`Document has been ${action} successfully.`); 
         // Update the document's approvalStatus in the state
         setDocuments((prevDocs) =>
           prevDocs.map((doc) => {

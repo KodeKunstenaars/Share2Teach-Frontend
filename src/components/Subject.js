@@ -24,7 +24,7 @@ const Subject = () => {
             headers: headers,
         };
 
-        // Use the correct backend URL
+       
         fetch(`/search?subject=${encodeURIComponent(title)}`, requestOptions)
             .then((response) => {
                 if (!response.ok) {
@@ -59,9 +59,8 @@ const Subject = () => {
                 return response.json();
             })
             .then((data) => {
-                // The backend should return a presigned URL
                 const downloadUrl = data.presigned_url;
-                window.open(downloadUrl, '_blank'); // Open the download in a new tab
+                window.open(downloadUrl, '_blank'); 
             })
             .catch((err) => {
                 console.error("Download error:", err.message);
@@ -107,7 +106,7 @@ const handleReport = (documentId, reportReason) => {
     headers.append("Authorization", `Bearer ${jwtToken}`);
 
     const body = JSON.stringify({
-        reason: reportReason, // Only send the reason
+        reason: reportReason, 
     });
 
     fetch(`/report-document/${documentId}`, {
@@ -119,7 +118,7 @@ const handleReport = (documentId, reportReason) => {
             if (!response.ok) {
                 throw new Error('Failed to submit report');
             }
-            setSuccessMessage('Report submitted successfully!'); // Use setSuccessMessage
+            setSuccessMessage('Report submitted successfully!'); 
             setShowButtons(true);
         })
         .catch((error) => {
@@ -127,7 +126,7 @@ const handleReport = (documentId, reportReason) => {
             setShowButtons(true);
         });
 
-    setShowButtons(false); // Hide buttons while reporting
+    setShowButtons(false); 
 };
 
     if (loading) {
@@ -180,7 +179,7 @@ const handleReport = (documentId, reportReason) => {
                                     documentId={doc._id}
                                     onReport={handleReport}
                                     showButtons={showButtons}
-                                    setShowButtons={setShowButtons}  // Pass the setter function
+                                    setShowButtons={setShowButtons} 
                                 />
                                 {/* Conditionally display the download button based on showButtons */}
                                 <button

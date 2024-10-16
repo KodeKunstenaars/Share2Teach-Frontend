@@ -15,7 +15,7 @@ const Home = () => {
             params.append("grade", grade.trim());
         }
 
-        // Assuming you're using React Router's `navigate` function here to handle the search
+        
         window.location.href = `/search?${params.toString()}`;
     };
 
@@ -23,9 +23,8 @@ const Home = () => {
         <div className="text-center">
             <h2 className="subject-title">Welcome to Share2Teach</h2>
             <hr/>
-            {/* Add a large search bar like Google */}
             <div className="d-flex justify-content-center mt-4">
-                <div className="w-75 search-bar"> {/* Add the class name here */}
+                <div className="w-75 search-bar"> 
                     <Search onSearch={handleSearch}/>
                 </div>
             </div>
