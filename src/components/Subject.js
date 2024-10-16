@@ -101,35 +101,34 @@ const Subject = () => {
     };
 
     // Handle the report submission
-    const handleReport = (documentId, reportReason) => {
-        const headers = new Headers();
-        headers.append("Content-Type", "application/json");
-        headers.append("Authorization", `Bearer ${jwtToken}`);
+const handleReport = (documentId, reportReason) => {
+    const headers = new Headers();
+    headers.append("Content-Type", "application/json");
+    headers.append("Authorization", `Bearer ${jwtToken}`);
 
-        const body = JSON.stringify({
-            reason: reportReason, // Only send the reason
+    const body = JSON.stringify({
+        reason: reportReason, // Only send the reason
+    });
+
+    fetch(`/report-document/${documentId}`, {
+        method: 'POST',
+        headers: headers,
+        body: body,
+    })
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error('Failed to submit report');
+            }
+            setSuccessMessage('Report submitted successfully!'); // Use setSuccessMessage
+            setShowButtons(true);
+        })
+        .catch((error) => {
+            console.error('Error submitting report:', error);
+            setShowButtons(true);
         });
 
-        fetch(`/report-document/${documentId}`, {
-            method: 'POST',
-            headers: headers,
-            body: body,
-        })
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error('Failed to submit report');
-                }
-                alert('Report submitted successfully!');
-                setShowButtons(true);
-            })
-            .catch((error) => {
-                console.error('Error submitting report:', error);
-                setShowButtons(true);
-            });
-
-        setShowButtons(false); // Hide buttons while reporting
-
-    };
+    setShowButtons(false); // Hide buttons while reporting
+};
 
     if (loading) {
         return (

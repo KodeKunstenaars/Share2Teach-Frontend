@@ -1,0 +1,71 @@
+.text-center { /* Center the text */
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+/* FAQ container */
+.faq-container {
+    max-width: 1200px; /* Set the max width of the FAQ section */
+    margin: 0 auto; /* Center the FAQ section on the page */
+    padding: 20px;
+}
+
+/* FAQ list styling */
+ul {
+    list-style-type: none; /* Remove bullets */
+    padding: 0;
+    margin: 0;
+    text-align: left; /* Align text to the left */
+}
+
+/* Style each FAQ item */
+li {
+    margin-bottom: 1rem;
+    border: 1px solid #ddd; /* Light border */
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    transition: background-color 0.3s ease;
+}
+
+/* Question styling */
+.faq-question {
+    cursor: pointer; /* Makes the question clickable */
+    padding: 1rem;
+    background-color: #3f668d; /* Dark blue background */
+    color: white; /* White text for contrast */
+    font-weight: bold;
+    border-radius: 8px 8px 0 0; /* Rounded top corners */
+    display: flex;
+    align-items: center;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.faq-question::before {
+    content: '\25BA'; /* Right arrow Unicode */
+    margin-right: 10px;
+    transition: transform 0.3s ease;
+    display: inline-block;
+}
+
+.active .faq-question::before {
+    transform: rotate(90deg); /* Arrow points down when expanded */
+}
+
+/* Answer styling (initially hidden) */
+.faq-answer {
+    padding: 1rem;
+    background-color: #5f8ec6; /* Lighter dark blue for the answer */
+    color: white;
+    border-radius: 0 0 8px 8px; /* Rounded bottom corners */
+    display: none; /* Hide by default */
+}
+
+.faq-item {
+    margin-bottom: 20px;
+    width: 70%; /* Adjust the percentage to your liking */
+}  
+
+/* Show the answer when the active class is applied */
+.faq-item.active .faq-answer {
+    display: block;
+}

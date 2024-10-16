@@ -5,6 +5,7 @@ const ModerateDocuments = () => {
   const [documents, setDocuments] = useState([]);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
+  const [successMessage, setSuccessMessage] = useState(null); // State for success messages
 
   // Access jwtToken from context
   const { jwtToken } = useOutletContext();
@@ -71,7 +72,7 @@ const ModerateDocuments = () => {
         return response.json();
       })
       .then(() => {
-        alert(`Document has been ${action}`);
+        setSuccessMessage(`Document has been ${action} successfully.`); // Set success message
         // Update the document's approvalStatus in the state
         setDocuments((prevDocs) =>
           prevDocs.map((doc) => {
@@ -114,34 +115,37 @@ const ModerateDocuments = () => {
     }
   };
 
-
-    // Function to handle document download
-    const handleDownload = (docId) => {
-        fetch(`/download-document/${docId}`, {
-            method: "GET",
-        })
-            .then((response) => {
-                if (!response.ok) {
-                    return response.text().then((text) => {
-                        throw new Error(`Error ${response.status}: ${text}`);
-                    });
-                }
-                return response.json();
-            })
-            .then((data) => {
-                // The backend should return a presigned URL
-                const downloadUrl = data.presigned_url;
-                window.open(downloadUrl, '_blank');
-            })
-            .catch((err) => {
-                console.error("Download error:", err.message);
-            });
-    };
+  // Function to handle document download
+  const handleDownload = (docId) => {
+    fetch(`/download-document/${docId}`, {
+      method: "GET",
+    })
+      .then((response) => {
+        if (!response.ok) {
+          return response.text().then((text) => {
+            throw new Error(`Error ${response.status}: ${text}`);
+          });
+        }
+        return response.json();
+      })
+      .then((data) => {
+        const downloadUrl = data.presigned_url;
+        window.open(downloadUrl, "_blank");
+      })
+      .catch((err) => {
+        console.error("Download error:", err.message);
+      });
+  };
 
   return (
     <div>
       <h2 className="subject-title">Moderate Documents</h2>
       <hr />
+      {successMessage && (
+        <div className="alert alert-success" role="alert">
+          {successMessage}
+        </div>
+      )}
       {loading ? (
         <p>Loading documents...</p>
       ) : error ? (
@@ -172,7 +176,6 @@ const ModerateDocuments = () => {
                       </span>
                     </td>
                     <td>
-                      {/* Conditionally render Approve and Deny buttons */}
                       {!doc.approvalStatus || doc.approvalStatus === "pending" ? (
                         <>
                           <button
@@ -189,13 +192,12 @@ const ModerateDocuments = () => {
                           </button>
                         </>
                       ) : null}
-                      {/* Download button */}
-                        <button
-                            className="btn btn-sm btn-outline-primary"
-                            onClick={() => handleDownload(doc.id || doc._id)}
-                        >
-                            Download
-                        </button>
+                      <button
+                        className="btn btn-sm btn-outline-primary"
+                        onClick={() => handleDownload(doc.id || doc._id)}
+                      >
+                        Download
+                      </button>
                     </td>
                   </tr>
                 );
@@ -204,7 +206,7 @@ const ModerateDocuments = () => {
           </table>
         </div>
       ) : (
-          <p>No documents to moderate.</p>
+        <p>No documents to moderate.</p>
       )}
     </div>
   );
