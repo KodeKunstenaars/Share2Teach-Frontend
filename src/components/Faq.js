@@ -6,7 +6,7 @@ function FAQ() {
     const [activeIndex, setActiveIndex] = useState(null); // Track the active index
 
     useEffect(() => {
-        fetch('http://localhost:8080/faqs') // Replace with your actual backend URL
+        fetch('/faqs')
             .then(response => response.json())
             .then(data => setFaqs(data))
             .catch(error => console.error('Error fetching FAQs:', error));

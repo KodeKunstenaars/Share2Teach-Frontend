@@ -5,20 +5,20 @@ const ReportButton = ({ documentId, onReport, showButtons, setShowButtons }) => 
     const [reportReason, setReportReason] = useState('');
 
     const handleSubmit = () => {
-        console.log("Report reason selected:", reportReason); // Add this log
+        console.log("Report reason selected:", reportReason);
         if (reportReason) {
-            console.log("Submitting report for document:", documentId); // Add this log
+            console.log("Submitting report for document:", documentId); 
             onReport(documentId, reportReason);
-            setIsReporting(false); // Close the modal or form
-            setShowButtons(true); // Show buttons again after submitting report
+            setIsReporting(false); 
+            setShowButtons(true);
         } else {
             console.log("No report reason selected.");
         }
     };
 
     const handleCancel = () => {
-        setIsReporting(false); // Close the modal
-        setShowButtons(true);   // Show the buttons when the modal is closed
+        setIsReporting(false); 
+        setShowButtons(true);   
     };
 
     return (
