@@ -6,7 +6,7 @@ const CreateUser = () => {
     const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [role, setRole] = useState("Educator"); 
+    const [role, setRole] = useState(""); 
     const [qualification, setQualification] = useState("");
 
     // State variables for handling responses and errors
@@ -55,7 +55,7 @@ const CreateUser = () => {
             setLastName("");
             setEmail("");
             setPassword("");
-            setRole("educator");
+            setRole("");
             setQualification("");
         } catch (err) {
             console.error(err);
@@ -137,7 +137,8 @@ const CreateUser = () => {
                         value={role}
                         onChange={(e) => setRole(e.target.value)}
                         required
-                    >
+                    >   
+                        <option value= ""></option>
                         <option value="admin">Admin</option>
                         <option value="educator">Educator</option>
                         <option value="moderator">Moderator</option>
