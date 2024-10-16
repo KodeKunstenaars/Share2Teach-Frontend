@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import '../styles/Faq.css'; // Import the updated CSS
+import '../styles/Faq.css'; 
 
 function FAQ() {
     const [faqs, setFaqs] = useState([]);
     const [activeIndex, setActiveIndex] = useState(null);
 
     useEffect(() => {
-        fetch('http://localhost:8080/faqs') // Replace with your actual backend URL
+        fetch('/faqs')
             .then(response => response.json())
             .then(data => setFaqs(data))
             .catch(error => console.error('Error fetching FAQs:', error));

@@ -35,7 +35,7 @@ const Search = () => {
 
     // Navigate to the search results page with query parameters
     navigate(`/search?${params.toString()}`);
-    // Form will reset due to useEffect when the location changes
+    
   };
 
   return (
@@ -46,7 +46,7 @@ const Search = () => {
           onClick={() => setIsSearchOpen(true)}
           style={{ background: "none", border: "none", cursor: "pointer" }}
         >
-          <i className="fas fa-search search-icon"></i> {/* .search-icon */}
+          <i className="fas fa-search search-icon"></i> 
         </button>
       ) : (
         <form onSubmit={handleSearchSubmit} className="d-flex flex-column">

@@ -1,9 +1,8 @@
-// AddDocument.js
 import React, { useState } from "react";
 import { useOutletContext } from "react-router-dom";
 
 const AddDocument = () => {
-  // Access jwtToken from context
+  
   const { jwtToken } = useOutletContext();
 
   // State variables to hold user inputs
@@ -48,12 +47,12 @@ const AddDocument = () => {
     setUploading(true);
 
     try {
-      // Step 1: Request a presigned URL from the backend
+      // Request a presigned URL from the backend
       const presignedResponse = await fetch("/upload-document/", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${jwtToken}`, // Use jwtToken from context
+          Authorization: `Bearer ${jwtToken}`, 
         },
       });
 
@@ -65,13 +64,13 @@ const AddDocument = () => {
       const presignedData = await presignedResponse.json();
       const { presigned_url, document_id } = presignedData;
 
-      // Step 2: Upload the file to S3 using the presigned URL
+      // Upload the file to S3 using the presigned URL
       const uploadResponse = await fetch(presigned_url, {
         method: "PUT",
         headers: {
-          "Content-Type": file.type, // Set the correct content type
+          "Content-Type": file.type, 
         },
-        body: file, // Directly upload the file
+        body: file,
       });
 
       if (!uploadResponse.ok) {
@@ -84,15 +83,15 @@ const AddDocument = () => {
         throw new Error(`Failed to upload file to S3: ${errorText}`);
       }
 
-      // Step 3: Submit the metadata to the backend
+      // Submit the metadata to the backend
       const metadataResponse = await fetch("/upload-document/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${jwtToken}`, // Use jwtToken from context
+          Authorization: `Bearer ${jwtToken}`, 
         },
         body: JSON.stringify({
-          document_id, // Backend expects this
+          document_id,
           title,
           subject,
           grade,
