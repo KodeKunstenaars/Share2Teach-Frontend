@@ -1,17 +1,15 @@
-import { useState } from "react";
+import {useState} from "react";
 import Input from "./form/Input";
-import { useNavigate, useOutletContext } from "react-router-dom";
+import {Link, useNavigate, useOutletContext} from "react-router-dom";
 
-// component that will display the login page
 const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    const { setJwtToken } = useOutletContext();
-    const { setAlertClassName } = useOutletContext();
-    const { setAlertMessage } = useOutletContext();
-    const { toggleRefresh } = useOutletContext();
-
+    const {setJwtToken} = useOutletContext();
+    const {setAlertClassName} = useOutletContext();
+    const {setAlertMessage} = useOutletContext();
+    const {toggleRefresh} = useOutletContext();
 
     const navigate = useNavigate();
 
@@ -22,7 +20,7 @@ const Login = () => {
         let payload = {
             email: email,
             password: password,
-        }
+        };
 
         const requestOptions = {
             method: "POST",
@@ -31,7 +29,7 @@ const Login = () => {
             },
             credentials: 'include',
             body: JSON.stringify(payload),
-        }
+        };
 
         fetch(`/authenticate`, requestOptions)
             .then((response) => response.json())
@@ -40,28 +38,49 @@ const Login = () => {
                     setAlertClassName("alert-danger");
                     setAlertMessage(data.message);
                 } else {
-                    setJwtToken(data.access_token);
+                    const jwtToken = data.access_token;
+                    setJwtToken(jwtToken); // Store the JWT token in state
+
+                    // Store the JWT token in localStorage
+                    localStorage.setItem("jwtToken", jwtToken);
+
+                    // Decode the JWT token to extract the role
+                    const base64Url = jwtToken.split(".")[1];
+                    const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+                    const jsonPayload = decodeURIComponent(
+                        atob(base64)
+                            .split("")
+                            .map(function (c) {
+                                return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+                            })
+                            .join("")
+                    );
+                    const decodedPayload = JSON.parse(jsonPayload);
+
+                    // Store the user role in localStorage
+                    const userRole = decodedPayload.role || "";
+                    localStorage.setItem("userRole", userRole);
+
+                    // Clear any error messages and navigate to the homepage
                     setAlertClassName("d-none");
                     setAlertMessage("");
-                    toggleRefresh(true);
-                    navigate("/");
+                    toggleRefresh(true); // Start token refreshing
+                    navigate("/"); // Redirect to home
                 }
             })
             .catch(error => {
                 setAlertClassName("alert-danger");
-                setAlertMessage(error);
-            })
-    }
+                setAlertMessage("Login failed. Please try again.");
+            });
+    };
 
-
-    return(
-
+    return (
         <div className="col-md-6 offset-md-3">
             <h2>Login</h2>
-            <hr />
+            <hr/>
 
             <form onSubmit={handleSubmit}>
-                <Input 
+                <Input
                     title="Email Address"
                     type="email"
                     className="form-control"
@@ -70,7 +89,7 @@ const Login = () => {
                     onChange={(event) => setEmail(event.target.value)}
                 />
 
-                <Input 
+                <Input
                     title="Password"
                     type="password"
                     className="form-control"
@@ -80,15 +99,23 @@ const Login = () => {
                 />
 
                 <hr/>
-                <input 
-                    type="submit"
-                    className="btn btn-primary"
-                    value="Login"
-                />
+
+                {/* Add d-flex and justify-content-between to move buttons apart */}
+                <div className="d-flex justify-content-between">
+                    <input
+                        type="submit"
+                        className="btn btn-primary btn-submit"
+                        value="Login"
+                    />
+                    <Link to="/reset-password">
+            <span className="btn btn-primary btn-reset">
+                Reset Password
+            </span>
+                    </Link>
+                </div>
             </form>
         </div>
-    
-    )
-}
+    );
+};
 
 export default Login;

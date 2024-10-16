@@ -1,26 +1,42 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import '../styles/Search.css';
 
-const Search = ({ onSearch }) => {
+const Search = () => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const [search, setSearch] = useState("");
-  const navigate = useNavigate(); // Hook to navigate to another route
+  const [title, setTitle] = useState("");
+  const [subject, setSubject] = useState("");
+  const [grade, setGrade] = useState("");
+  const navigate = useNavigate();
   const location = useLocation();
+
+  // Use useEffect to reset the search form when the location changes
+  useEffect(() => {
+    setIsSearchOpen(false);
+    setTitle("");
+    setSubject("");
+    setGrade("");
+  }, [location]);
 
   const handleSearchSubmit = (event) => {
     event.preventDefault();
-    if (search.trim() !== "") {
-      onSearch(search); // Optionally, call the parent search function
-      navigate(`/search/${search}`); // Redirect to the search results page
-      setIsSearchOpen(false);
-      setSearch("");
-    }
-  };
 
-  useEffect(() => {
-    setIsSearchOpen(false);
-    setSearch("");
-  }, [location]);
+    // Build the query parameters based on user input
+    const params = new URLSearchParams();
+    if (title.trim() !== "") {
+      params.append("title", title.trim());
+    }
+    if (subject.trim() !== "") {
+      params.append("subject", subject.trim());
+    }
+    if (grade.trim() !== "") {
+      params.append("grade", grade.trim());
+    }
+
+    // Navigate to the search results page with query parameters
+    navigate(`/search?${params.toString()}`);
+    // Form will reset due to useEffect when the location changes
+  };
 
   return (
     <div className="search-bar">
@@ -30,18 +46,32 @@ const Search = ({ onSearch }) => {
           onClick={() => setIsSearchOpen(true)}
           style={{ background: "none", border: "none", cursor: "pointer" }}
         >
-          <i className="fas fa-search" style={{ fontSize: "1.5rem" }}></i>
+          <i className="fas fa-search search-icon"></i> {/* .search-icon */}
         </button>
       ) : (
-        <form onSubmit={handleSearchSubmit} className="d-flex">
+        <form onSubmit={handleSearchSubmit} className="d-flex flex-column">
           <input
             type="text"
-            className="form-control"
-            placeholder="Search..."
-            value={search}
-            onChange={(event) => setSearch(event.target.value)}
+            className="form-control mb-2"
+            placeholder="Title"
+            value={title}
+            onChange={(event) => setTitle(event.target.value)}
           />
-          <button type="submit" className="btn btn-primary ms-2">
+          <input
+            type="text"
+            className="form-control mb-2"
+            placeholder="Subject"
+            value={subject}
+            onChange={(event) => setSubject(event.target.value)}
+          />
+          <input
+            type="text"
+            className="form-control mb-2"
+            placeholder="Grade"
+            value={grade}
+            onChange={(event) => setGrade(event.target.value)}
+          />
+          <button type="submit" className="btn btn-primary">
             Search
           </button>
         </form>

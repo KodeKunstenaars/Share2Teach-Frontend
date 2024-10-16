@@ -1,0 +1,410 @@
+/* Wrapper for the entire app */
+.app-wrapper {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Sidebar styling to make it vertical and fixed */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 250px;
+    height: 100vh; /* Full height of the viewport */
+    background-color: #f8f9fa; /* Light grey background */
+    padding-top: 20px; /* Add padding at the top */
+    padding-left: 15px;
+    padding-right: 15px;
+    border-right: 1px solid #ddd; /* Border on the right for separation */
+    z-index: 1000; /* Ensure the sidebar is on top */
+    overflow-y: auto; /* Allow scrolling if content is too tall */
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+/* Sidebar link styling */
+.sidebar .list-group-item {
+    font-size: 1rem; /* Set a consistent font size */
+    padding: 10px 15px; /* Add padding inside the items */
+    color: #333; /* Darker text color for better contrast */
+    transition: all 0.3s ease; /* Smooth transition for hover effects */
+}
+
+/* Hover effects for sidebar items */
+.sidebar .list-group-item:hover {
+    background-color: #007bff; /* Blue background on hover */
+    color: white; /* White text on hover */
+}
+
+/* Main Content adjusted to account for the sidebar */
+.main-content {
+    margin-left: 250px; /* Add margin to the left, same width as the sidebar */
+    padding: 20px; /* Add some padding to the main content */
+    width: calc(100% - 250px); /* Adjust width to fill the remaining space */
+}
+
+/* Headings */
+.title {
+    font-size: 3rem; /* Larger font size */
+    margin-top: 30px; /* Space at the top */
+    margin-bottom: 20px; /* Space at the bottom */
+    color: #007bff; /* Consistent heading color */
+    text-align: center;
+}
+
+/* Subject Title Styling */
+.subject-title {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    color: #007bff;
+}
+
+/* Login, Register, and Logout buttons styling */
+.btn-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px; /* Add space between buttons */
+    margin-top: 20px; /* Add margin above */
+    padding: 20px;
+}
+
+
+
+/* Specific button styles */
+
+.btn-login:hover {
+    background-color: #007bff;
+    color: white;
+}
+.btn-login {
+    border: 2px solid #007bff;
+    width: 100%;
+}
+
+.btn-register:hover {
+    background-color: #28a745;
+    color: white;
+}
+.btn-register {
+    border: 2px solid #28a745;
+    width: 100%;
+}
+
+.btn-logout:hover {
+    background-color: #dc3545;
+    color: white;
+}
+
+.btn-logout {
+    border: 2px solid #dc3545;
+    width: 100%;
+}
+
+/* Hover effects for buttons */
+.btn:hover {
+    opacity: 0.9;
+}
+
+/* Subject Container */
+.subject-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; /* Center the subject cards */
+    gap: 20px; /* Add space between cards */
+    margin-top: 30px;
+}
+
+/* Subject Card Styling */
+.subject-card {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 200px; /* Width for each subject card */
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Hover effect for subject cards */
+.subject-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Subject Link Styling */
+.subject-link {
+    font-size: 1.25rem;
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.subject-link:hover {
+    color: #0056b3;
+}
+
+/* Alert messages */
+.alert {
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    color: white;
+}
+
+.alert-success {
+    background-color: #28a745; /* Success green */
+}
+
+.alert-danger {
+    background-color: #dc3545; /* Danger red */
+}
+
+/* Table Styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+table th, table td {
+    padding: 15px;
+    text-align: left;
+}
+
+table th {
+    background-color: #f8f9fa;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+table td {
+    background-color: #fff;
+    font-size: 1rem;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: #f9f9f9;
+}
+
+.table-hover tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Search form styling for larger input fields */
+.search-bar input[type="text"] {
+    font-size: 1.5rem; /* Increase font size */
+    padding: 15px; /* Increase padding inside the input */
+    width: 100%; /* Ensure it spans the container */
+    margin-bottom: 20px; /* Add space between inputs */
+    border: 2px solid #ccc; /* Add a thicker border */
+    border-radius: 8px; /* Slightly rounded corners */
+}
+
+/* Style for the search button */
+.search-bar button {
+    font-size: 1.5rem; /* Increase button font size */
+    padding: 12px 24px; /* Increase button padding */
+    background: linear-gradient(45deg, #007bff, #0056b3); /* Consistent button styling */
+    color: white;
+    border: 2px solid #007bff;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.search-bar button:hover {
+    background: linear-gradient(45deg, #0056b3, #003d7a);
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Smooth fade-in effect */
+.fade-in {
+    opacity: 0;
+    animation: fadeIn ease 1s;
+    animation-fill-mode: forwards;
+}
+
+/* Document Container */
+.document-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 30px;
+}
+
+/* Document Card Styling */
+.document-card {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    text-align: left;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.document-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Moderation Status Badge */
+.badge {
+    display: inline-block;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-weight: bold;
+    margin-top: 10px;
+    color: white;
+    text-align: center;
+}
+
+.badge-approved {
+    background-color: #28a745;
+}
+
+.badge-pending {
+    background-color: #ffc107;
+    color: #212529;
+}
+
+/* Document Actions */
+.document-actions {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+    gap: 10px;
+}
+
+/* Approve and Deny Buttons */
+.document-actions .btn-group {
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Common Button Styles */
+.btn {
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background-color: white;
+    color: black;
+}
+
+/* Approve Button */
+.btn-approve {
+    border: 2px solid #28a745;
+    width: 100%;
+}
+
+.btn-approve:hover {
+    background-color: #28a745;
+    color: white;
+}
+
+/* Deny Button */
+.btn-deny {
+    border: 2px solid #dc3545;
+    width: 100%;
+}
+
+.btn-deny:hover {
+    background-color: #dc3545;
+    color: white;
+}
+
+/* Download Button */
+.document-actions .btn-download {
+    width: 100%;
+    border: 2px solid #007bff;
+}
+
+.document-actions .btn-download:focus, .document-actions .btn-download:active, .document-actions .btn-download {
+    border: 2px solid #007bff; /* Reinforce the border for all states */
+    background-color: white;
+    color: #007bff;
+}
+
+.document-actions .btn-download:hover {
+    background-color: #007bff;
+    color: white;
+}
+
+/* Adjust hover effect for all buttons */
+.btn:hover {
+    opacity: 0.9;
+}
+
+.rating {
+    display: inline-block;
+    cursor: pointer;
+}
+
+.star {
+    font-size: 1.5rem;
+    color: #ccc;
+    margin: 0 0.1rem;
+}
+
+.star.filled {
+    color: #ffcc00;
+}
+
+.star:hover {
+    color: #ffcc00;
+}
+
+.report-modal select {
+    width: 38%;
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f8f9fa; /* Light background color */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Slight shadow for depth */
+    transition: border-color 0.2s ease-in-out;
+}
+
+.report-modal select:focus {
+    border-color: #dc3545; /* Bootstrap danger color on focus */
+    outline: none; /* Remove the default outline */
+}
+
+.report-modal option {
+    padding: 10px;
+}
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 200px; /* Narrower sidebar on small screens */
+    }
+
+    .main-content {
+        margin-left: 200px; /* Adjust main content margin for smaller screens */
+    }
+
+    .btn {
+        font-size: 14px; /* Adjust button font size for smaller screens */
+        padding: 8px 15px;
+    }
+
+    /* Adjust subject card width for small screens */
+    .subject-card {
+        width: 150px; /* Make subject cards smaller on small screens */
+    }
+}
