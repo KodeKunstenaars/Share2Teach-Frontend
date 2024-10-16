@@ -1,5 +1,5 @@
 import React from 'react';
-import Search from './Search'; // Assuming you have a Search component already
+import Search from './Search';
 
 const Home = () => {
     // Function to handle the search

@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import '../styles/Search.css';
 
 const Search = () => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -45,7 +46,7 @@ const Search = () => {
           onClick={() => setIsSearchOpen(true)}
           style={{ background: "none", border: "none", cursor: "pointer" }}
         >
-          <i className="fas fa-search" style={{ fontSize: "1.5rem" }}></i>
+          <i className="fas fa-search search-icon"></i> {/* .search-icon */}
         </button>
       ) : (
         <form onSubmit={handleSearchSubmit} className="d-flex flex-column">
